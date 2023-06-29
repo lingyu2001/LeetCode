@@ -28,7 +28,7 @@ class Solution {
                     while (left < right && right + 1 < nums.length && nums[right] == nums[right + 1]) {
                         right--;
                     }
-                } else if(sum < 0) {
+                } else if (sum < 0) {
                     left++;
                 } else {
                     right--;
