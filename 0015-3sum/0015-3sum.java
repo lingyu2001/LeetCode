@@ -12,7 +12,8 @@ class Solution {
                 continue;
             }
             for(left = i + 1, right = nums.length - 1;left < right;) {
-                if(nums[i] + nums[left] + nums[right] == 0) {
+                int sum = nums[i] + nums[left] + nums[right];
+                if(sum == 0) {
                     list.add(nums[i]);
                     list.add(nums[left]);
                     list.add(nums[right]);
@@ -27,7 +28,7 @@ class Solution {
                     while (left < right && right + 1 < nums.length && nums[right] == nums[right + 1]) {
                         right--;
                     }
-                } else if(nums[i] + nums[left] + nums[right] < 0) {
+                } else if(sum < 0) {
                     left++;
                 } else {
                     right--;
