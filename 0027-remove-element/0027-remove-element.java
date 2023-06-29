@@ -22,7 +22,6 @@ class Solution {
         // }
         int cnt = 0;
         for (int k = 0; k < nums.length; k++) {
-            System.out.print(nums[k] +" ");
             if (nums[k] == val) {
                 break;
             } else {
