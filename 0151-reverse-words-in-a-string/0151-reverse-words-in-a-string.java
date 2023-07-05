@@ -1,14 +1,10 @@
 class Solution {
     StringBuilder sb;
     public String reverseWords(String s) {
-        System.out.println(s);
         s = s.trim();
         sb = removeSpaceInside(s);
-        System.out.println(sb.toString());
         reverse(sb, 0, sb.length() - 1);
-        System.out.println(sb.toString());
         reserseEachWord(sb);
-        System.out.println(sb.toString());
         return String.valueOf(sb);
     }
 
