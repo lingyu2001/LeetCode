@@ -1,49 +1,45 @@
 class Solution {
+    StringBuilder sb;
     public String reverseWords(String s) {
-        // remove the space at the beginning and the end of the string
+        System.out.println(s);
         s = s.trim();
-        // remove the space in the string
-        StringBuilder sb = new StringBuilder();
-        sb = removeString(s);
-        // reverse the String
-        reverseString(sb, 0, sb.length() - 1);
-        // reverse each word
-        reverseEachWord(sb);
+        sb = removeSpaceInside(s);
+        System.out.println(sb.toString());
+        reverse(sb, 0, sb.length() - 1);
+        System.out.println(sb.toString());
+        reserseEachWord(sb);
+        System.out.println(sb.toString());
         return String.valueOf(sb);
     }
-    
-    private StringBuilder removeString(String s) {
-        int i = 0, j = s.length();
+
+    public StringBuilder removeSpaceInside(String s) {
         StringBuilder sb = new StringBuilder();
-        while (i < j) {
-            // get the character at index i
-            char c = s.charAt(i);
-            // remove continuous spaces, the second condition is to prevent sb from having continuous spaces
-            if (c != ' ' || sb.charAt(sb.length() - 1) != ' ') {
-                sb.append(c);
+        for (int i = 0; i < s.length(); i++) {
+            if (i > 0 && s.charAt(i - 1) == ' ' && s.charAt(i) == ' ') {
+                continue;
+            } else {
+                sb.append(s.charAt(i));
             }
-            i++;
         }
         return sb;
     }
     
-    private void reverseString(StringBuilder sb, int start, int end) {
-        for(int i = start, j = end; i <= j; i++, j--) {
-            char temp = sb.charAt(i);
-            sb.setCharAt(i, sb.charAt(j));
-            sb.setCharAt(j, temp);
+    public void reverse(StringBuilder s, int start, int end) {
+        for (int i = start, j = end; i < j; i++, j--) {
+            char temp = s.charAt(i);
+            s.setCharAt(i,s.charAt(j));
+            s.setCharAt(j, temp);
         }
     }
     
-    private void reverseEachWord(StringBuilder sb) {
-        int i = 0, j = sb.length();
-        while (i < j) {
-            int end = i;
-            while (end < j && sb.charAt(end) != ' ') {
-                end++;
+    public void reserseEachWord(StringBuilder sb) {
+        int i,j;
+        for (i = 0, j = i + 1; j < sb.length(); j++) {
+            if (sb.charAt(j) == ' ') {
+                reverse(sb, i, j - 1);
+                i = j + 1;
             }
-            reverseString(sb, i, end - 1);
-            i = end + 1;
         }
+        reverse(sb, i, sb.length()-1);
     }
 }
