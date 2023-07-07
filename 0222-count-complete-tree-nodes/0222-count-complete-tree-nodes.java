@@ -16,17 +16,10 @@
 class Solution {
     public int countNodes(TreeNode root) {
         int result = 0;
-        Queue<TreeNode> q = new ArrayDeque<>();
-        if (root != null) q.offer(root);
-        while (!q.isEmpty()) {
-            int size = q.size();
-            for (int i = 0; i < size; i++) {
-                TreeNode t = q.poll();
-                result++;
-                if (t.left != null) q.offer(t.left);
-                if (t.right != null) q.offer(t.right);
-            }
-        }
+        if (root == null) return result;
+        result++;
+        if (root.left != null) result += countNodes(root.left);
+        if (root.right != null) result += countNodes(root.right);
         return result;
     }
 }
