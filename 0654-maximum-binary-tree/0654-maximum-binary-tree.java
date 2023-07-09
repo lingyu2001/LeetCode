@@ -28,8 +28,8 @@ class Solution {
     
     public TreeNode helper(int[] nums, int start, int end) {
         if (start == end) return null;
-        if (end - start == 1) return new TreeNode(nums[start]);
-        int index = 0,  max = 0;
+        // if (end - start == 1) return new TreeNode(nums[start]);
+        int index = start,  max = 0;
         for (int i = start; i < end; i++) {
             if (nums[i] > max) {
                 index = i;
