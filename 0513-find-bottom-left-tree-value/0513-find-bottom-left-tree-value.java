@@ -15,7 +15,7 @@
  */
 class Solution {
     public int findBottomLeftValue(TreeNode root) {
-        Queue<TreeNode> q = new ArrayDeque<>();
+        Queue<TreeNode> q = new LinkedList<>();
         if (root != null) q.offer(root);
         int res = 0;
         while (!q.isEmpty()) {
