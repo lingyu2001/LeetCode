@@ -27,7 +27,7 @@ class Solution {
         sum += root.val;
         if (sum == targetSum && root.left == null && root.right == null) {
             res.add(new ArrayList<>(path));
-            System.out.println(path.toString());
+            // System.out.println(path.toString());
             // path.removeLast();
             return;
         }
