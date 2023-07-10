@@ -16,14 +16,14 @@ class Solution {
             q = t;
         }
         // p.val < root < q.val
-        if (p.val < root.val && root.val < q.val) return root;
+        // if (p.val < root.val && root.val < q.val) return root;
         // p.val < q.val < root
         if (q.val < root.val)
             return lowestCommonAncestor(root.left,p,q);
         // root < p.val < q.val
         if (root.val < p.val)
             return lowestCommonAncestor(root.right,p,q);
-        if (root.val == p.val || root.val == q.val) return root;
-        return null;
+        return root;
+        // return null;
     }
 }
