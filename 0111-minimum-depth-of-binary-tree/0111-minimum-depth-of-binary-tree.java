@@ -14,26 +14,16 @@
  * }
  */
 class Solution {
+    int min = Integer.MAX_VALUE;
     public int minDepth(TreeNode root) {
-        Queue<TreeNode> q = new ArrayDeque<>();
-        if (root != null) q.offer(root);
         int depth = 0;
-        while (!q.isEmpty()) {
-            int size = q.size();
-            depth++;
-            for (int i = 0; i < size; i++) {
-                TreeNode t = q.poll();
-                if (t.left == null && t.right == null) return depth;
-                if (t.left != null) q.offer(t.left);
-                if (t.right != null) q.offer(t.right);
-            }
-        }
-        return depth;
+        if (root == null) return 0;
+        depth++;
+        if (root.left == null && root.right == null) return 1;
+        int left = minDepth(root.left);
+        int right = minDepth(root.right);
+        if (left == 0) return right + 1;
+        else if (right == 0) return left + 1;
+        else return Math.min(left,right) + 1;
     }
-    
-//     public int Depth(TreeNode root) {
-//         if (root == null) return 0;
-//         int left = 0 , right = 0;
-        
-//     }
 }
