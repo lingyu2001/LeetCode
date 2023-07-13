@@ -1,25 +1,32 @@
 class Solution {
     public boolean isValid(String s) {
-        char[] chars = s.toCharArray();
+        // str --> char[] arr
+        // stack
+        // iterate the array
+            // if arr[i] = ( or [ or {
+                 // s.add(arr[i])
+            // else
+                // char c = s.poll();
+                // see if c and arr[i] are match, if not, return false
+        // return s.isEmpty()
+        char[] arr = s.toCharArray();
+        
         Stack<Character> stack = new Stack<>();
-        for (int i = 0; i < chars.length; i++) {
-            char c = s.charAt(i);
-            if (c == '(' || c == '{' || c == '[') {
-                stack.push(c);
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == '(' || arr[i] == '[' || arr[i] == '{') {
+                stack.push(arr[i]);
             } else {
-                char top = ' ';
-                if (stack.isEmpty()) {
+                // ) or ] or }
+                char c = '1';
+                if (stack.size() != 0)
+                    c = stack.pop();
+                else 
                     return false;
-                } else {
-                    top = stack.pop();
-                }
-                if (c == ']' && top != '[') {
+                // see if they are match
+                if ((c == '(' && arr[i] == ')') ||(c == '[' && arr[i] == ']') || (c == '{' && arr[i] == '}'))
+                    continue;
+                else 
                     return false;
-                } else if (c == '}' && top != '{') {
-                    return false;
-                } else if (c == ')' && top != '(') {
-                    return false;
-                }
             }
         }
         return stack.isEmpty();
