@@ -11,7 +11,7 @@ class Solution {
                 l++;
             } else {
                 set.add(s.charAt(r));
-                max = Math.max(max, s.substring(l, r + 1).length());
+                max = Math.max(max, set.size());
                 r++;
             }
         }
