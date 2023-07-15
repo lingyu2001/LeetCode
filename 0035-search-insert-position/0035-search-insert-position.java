@@ -1,18 +1,23 @@
 class Solution {
     public int searchInsert(int[] nums, int target) {
-        if (nums[0] >= target) return 0;
-        if (nums[nums.length - 1] == target) return nums.length - 1;
         int left = 0, right = nums.length - 1;
         while (left <= right) {
+            if (target < nums[left]) return left;
+            if (target > nums[right]) return right + 1;
             int mid = left + (right - left) / 2;
-            if (nums[mid] == target) return mid;
-            if (nums[mid] < target) {
-                left = mid + 1;
+            if (nums[mid] == target) {
+                return mid;
+            // 这里不取 mid-1 的原因：
+            // 取中点是偏左的，是无法取到右边界处的；
+            // 如果 mid-1 处恰好为目标值，将其定为右边界就会导致中点无法取到该位置，
+            // 故右边界我们取 mid
+            } else if (nums[mid] > target) {
+                right = mid;
             } else {
-                right = mid - 1;
+                left = mid + 1;
             }
         }
-        if (right < left) return left;
-        else return right;
+        // 
+        return left;
     }
 }
