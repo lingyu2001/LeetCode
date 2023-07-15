@@ -1,21 +1,16 @@
 class Solution {
     public int arrangeCoins(int n) {
-        int completedRows = 0;
-        long left = 1;
-        long right = n;
+        int left = 1, right = n, max = 0;
         while (left <= right) {
-
-            int mid = (int) ((left + right) / 2);
-            long coins = (long) ((mid / 2.0) * (mid + 1));
-            if (coins > n) {
+            int mid = left + (right - left) / 2;
+            long cnt = (long)((1 + mid) * (mid / 2.0));
+            if (cnt > (long)n) {
                 right = mid - 1;
             } else {
-                completedRows = Math.max(completedRows, mid);
+                max = Math.max(max, mid);
                 left = mid + 1;
             }
-            
         }
-
-        return completedRows;
+        return max;
     }
 }
