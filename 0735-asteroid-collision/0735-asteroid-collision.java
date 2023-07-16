@@ -22,13 +22,9 @@ class Solution {
                 }
             }
         }
-        LinkedList<Integer> l = new LinkedList();
-        while (!s.isEmpty()) {
-            l.addFirst(s.pop());
-        }
-        int[] ret = new int[l.size()];
-        for (int i = 0; i < ret.length; i++) {
-            ret[i] = l.get(i);
+        int[] ret = new int[s.size()];
+        for (int i = ret.length - 1; i >= 0; i--) {
+            ret[i] = s.pop();
         }
         return ret;
     }
