@@ -8,7 +8,7 @@ class Solution {
         int res = right;
         while (left <= right) {
             int mid = left + (right - left) / 2;
-            System.out.println(mid+ " " + days1(weights, mid));
+            // System.out.println(mid+ " " + days1(weights, mid));
             if (days1(weights, mid) > days) {
                 left = mid + 1;
             } else {
