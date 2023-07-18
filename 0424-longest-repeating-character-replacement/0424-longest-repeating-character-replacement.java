@@ -1,28 +1,33 @@
 class Solution {
     public int characterReplacement(String s, int k) {
-        int l = 0, r = 0;
-        int res = 0;
-        int max = 0;
-        int[] cnt = new int[26];
+        Map<Character, Integer> map = new HashMap<>();
+        int l = 0, r = 0, max = 0;
+        map.put(s.charAt(0),1);
         while (r < s.length()) {
-            cnt[s.charAt(r) - 'A']++;
-            max = maxMethod(cnt);
-            if (r - l + 1 - max > k) {
-                cnt[s.charAt(l) - 'A']--;
-                l++;
+            int len = r - l + 1;
+            int maxCnt = findMax(map);
+            if (len - maxCnt <= k) {
+                r++;
+                if (r < s.length()) 
+                    map.put(s.charAt(r),map.getOrDefault(s.charAt(r),0)+1);
+                if (len > max) {
+                    max = len;
+                    // System.out.println(l + " " + r);
+                }
             } else {
-                res = Math.max(res, r - l + 1);
+                map.put(s.charAt(l),map.get(s.charAt(l)) - 1);
+                l++;
             }
-            r++;
         }
-        return res;
+        return max;
     }
     
-    public int maxMethod(int[] cnt) {
+    public int findMax(Map<Character, Integer> map) {
         int max = 0;
-        for (int i = 0; i < cnt.length; i++) {
-            max = Math.max(max, cnt[i]);
+        for (int i: map.values()) {
+            max = Math.max(i,max);
         }
+        // System.out.println(map.values());
         return max;
     }
 }
