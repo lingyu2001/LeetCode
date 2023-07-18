@@ -1,27 +1,25 @@
-class Solution {
+public class Solution {
     public boolean checkInclusion(String s1, String s2) {
-        if (s1.length() > s2.length()) return false;
-        // store s1 in hashMap
-        Map<Character,Integer> map1 = new HashMap<>();
-        for (char c : s1.toCharArray()) {
-            map1.put(c, map1.getOrDefault(c,0) + 1);
-        }
-         // for (int i = 0; i < s1.length(); i++)
-         //    map1.put(s1.charAt(i), map1.getOrDefault(s1.charAt(i), 0) + 1);
+        if (s1.length() > s2.length())
+            return false;
+        int[] s1map = new int[26];
+        for (int i = 0; i < s1.length(); i++)
+            s1map[s1.charAt(i) - 'a']++;
         for (int i = 0; i <= s2.length() - s1.length(); i++) {
-            HashMap<Character, Integer> map2 = new HashMap<>();
-            for(int j = 0; j < s1.length(); j++) {
-                map2.put(s2.charAt(i + j), map2.getOrDefault(s2.charAt(i + j),0) + 1);
+            int[] s2map = new int[26];
+            for (int j = 0; j < s1.length(); j++) {
+                s2map[s2.charAt(i + j) - 'a']++;
             }
-            if (helper(map1,map2)) return true;
+            if (matches(s1map, s2map))
+                return true;
         }
-        // System.out.println("2");
         return false;
     }
     
-    public boolean helper( Map<Character,Integer> map1, Map<Character,Integer> map2) {
-        for (char c: map1.keySet()) {
-            if (!map1.get(c).equals(map2.getOrDefault(c,0))) return false;
+    public boolean matches(int[] s1map, int[] s2map) {
+        for (int i = 0; i < 26; i++) {
+            if (s1map[i] != s2map[i])
+                return false;
         }
         return true;
     }
