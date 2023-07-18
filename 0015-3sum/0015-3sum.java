@@ -7,11 +7,8 @@ class Solution {
         if (nums[0] > 0 || nums[nums.length - 1] < 0) return result;
         for (int i = 0; i < nums.length - 2; i++) {
             // distinct
-            while (i > 0 && nums[i] == nums[i - 1]) {
-                i++;
-                if(i >= nums.length) {
-                    return result;
-                }
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue;
             }
             current.add(nums[i]);
             //a + b = -nums[i]
