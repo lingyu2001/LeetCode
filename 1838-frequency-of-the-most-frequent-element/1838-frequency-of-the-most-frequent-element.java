@@ -6,12 +6,15 @@ class Solution {
         int max = 0;
         while (r < nums.length) {
             sum += nums[r];
+            int len = r - l + 1;
             // System.out.println(r+" "+l + " " + sum);
-            while ((long)(nums[r] * (r - l + 1))> (long)(sum + k)) {
+            if ((long)(nums[r] * len) <= (sum + k)) {
+                max = Math.max(max, len);
+                // if (len == 5)
+            } else if (nums[r] * len > sum + k) {
                 sum -= nums[l];
                 l++;
             }
-            max = Math.max(max, r - l + 1);
             r++;
         }
         return max;
