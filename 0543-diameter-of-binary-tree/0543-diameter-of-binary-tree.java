@@ -15,20 +15,16 @@
  */
 class Solution {
     int max = 0;
-    public int depth(TreeNode root) {
-        if (root == null) return 0;
-        return Math.max(depth(root.left), depth(root.right)) + 1;
-    }
-    public int path(TreeNode root) {
-        if (root == null) return 0;
-        return depth(root.left) + depth(root.right) ;
-    }
     public int diameterOfBinaryTree(TreeNode root) {
-        if (root == null) return max;
-        int cur = path(root);
-        max = Math.max(cur,max);
-        diameterOfBinaryTree(root.left);
-        diameterOfBinaryTree(root.right);
+        depth(root);
         return max;
+    }
+    
+    public int depth(TreeNode root) {
+        if (root == null) return -1;
+        int left = depth(root.left) + 1;
+        int right = depth(root.right) + 1;
+        max = Math.max(max,left + right);
+        return Math.max(left,right);
     }
 }
