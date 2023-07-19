@@ -10,13 +10,32 @@
  */
 class Solution {
     public void reorderList(ListNode head) {
-        if (head == null || head.next == null || head.next.next == null) return;
-        ListNode p1 = head, p2 = head, p3 = p1.next;
-        while (p2.next != null && p2.next.next != null) p2 = p2.next;
-        ListNode last = p2.next;
-        p2.next = null;
-        p1.next = last;
-        last.next = p3;
-        reorderList(p3);
+        // find the middle node
+        ListNode slow = head, fast = head.next;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        // reverse the second half
+        ListNode cur = slow.next;
+        ListNode prev = null;
+        slow.next = null;
+        ListNode next = null;
+        while (cur != null) {
+            next = cur.next;
+            cur.next = prev;
+            prev = cur;
+            cur = next;
+        }
+        // merge
+        ListNode head1 = head, head2 = prev;
+        while (head2 != null) {
+            ListNode tmp1 = head1.next;
+            ListNode tmp2 = head2.next;
+            head1.next = head2;
+            head2.next = tmp1;
+            head1 = tmp1;
+            head2 = tmp2;
+        }
     }
 }
