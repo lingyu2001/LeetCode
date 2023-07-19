@@ -1,21 +1,26 @@
 class Solution {
     public boolean wordPattern(String pattern, String s) {
-        String[] strs = s.split(" ");
-        Map<Character, String> map = new HashMap<>();
-        // System.out.println(strs.length + " " + pattern.length());
-        if (strs.length != pattern.length()) return false;
-        for (int i = 0; i < pattern.length(); i++) {
-            if (!map.containsKey(pattern.charAt(i))) {
-                // System.out.println(map.values() + " " +strs[i] );
-                if (map.values().contains(strs[i])) return false;
-                map.put(pattern.charAt(i), strs[i]);
-            } else {
-                if (!map.get(pattern.charAt(i)).equals(strs[i])) {
-                    // System.out.println(map.get(pattern.charAt(i)) + " " +strs[i] );
-                    return false;
-                }
-            }
+        String[] sArray = s.split("\s");
+        if(sArray.length != pattern.length()) {
+            return false;
         }
-        return true;
+        
+        HashMap<Character,String> charToWord = new HashMap<>();
+        HashMap<String,Character> wordToChar = new HashMap<>();
+        
+        for (int i = 0; i < pattern.length(); i++) {
+        
+            if(charToWord.containsKey(pattern.charAt(i)) && !charToWord.get(pattern.charAt(i)).equals(sArray[i])) {
+                return false;
+            }
+            
+            if(wordToChar.containsKey(sArray[i]) && !wordToChar.get(sArray[i]).equals(pattern.charAt(i))) {
+                return false;
+            }
+            
+            charToWord.put(pattern.charAt(i),sArray[i]);
+            wordToChar.put(sArray[i],pattern.charAt(i));
+        }
+        return true;    
     }
 }
