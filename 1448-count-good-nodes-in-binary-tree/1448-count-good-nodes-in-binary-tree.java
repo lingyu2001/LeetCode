@@ -21,12 +21,11 @@ class Solution {
     }
     public void helper(TreeNode root, int max) {
         if (root == null) return;
-        int max1 = max;
-        if (root.val >= max1) {
+        if (root.val >= max) {
             cnt++;
-            max1 = root.val;
+            max = root.val;
         }
-        helper(root.left,max1);      
-        helper(root.right,max1);
+        helper(root.left,max);      
+        helper(root.right,max);
     }
 }
