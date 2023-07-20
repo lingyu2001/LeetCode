@@ -11,11 +11,10 @@
 class Solution {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         ListNode head = new ListNode(), p = head, p1 = l1, p2 = l2;
-        int d = 0, sum = 0, k = 0;
+        int d = 0, k = 0;
         while (p1 != null || p2 != null) {
             int t = (p1 != null? p1.val:0) + (p2 != null? p2.val:0);
             p.val = (t + d) % 10;
-            sum = (int)Math.pow(10,k) * p.val + sum;
             p.next = new ListNode();
             p = p.next;
             k++;
@@ -36,14 +35,6 @@ class Solution {
         }
         // System.out.println();
         t1.next = null;
-        // System.out.println(head.val);
-        // if (sum != 0) {
-        //     ListNode t = head;
-        //     while (t != null && t.val == 0) {
-        //         t = t.next;
-        //     }
-        //     return t;
-        // }
         return head;
     }
 }
