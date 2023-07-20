@@ -4,13 +4,9 @@ class Solution {
                 b[0]*b[0] + b[1]*b[1])
         );
         for (int i = 0; i < points.length; i++) {
-            if (pq.size() < k) pq.add(points[i]);
-            else {
-                if (dis(points[i])< dis(pq.peek())) {
-                    pq.poll();
-                    pq.add(points[i]);
-                }
-            }
+            pq.add(points[i]);
+            if (pq.size() > k) 
+                pq.remove();
         }
         
         int[][] ans = new int[k][2];
