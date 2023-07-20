@@ -7,14 +7,15 @@ class Solution {
     }
     
     public void helper(int[] nums, int i, int j) {
+        res.add(new ArrayList<>(path));
         if (i >= j) {
-            res.add(new ArrayList<>(path));
             return ;
         }
-        path.add(nums[i]);
-        helper(nums,i + 1,nums.length);
-        path.removeLast();
-        helper(nums, i + 1, nums.length);
+        for (int k = i; k < j; k++) {
+            path.add(nums[k]);
+            helper(nums,k + 1,nums.length);
+            path.removeLast();
+        }
         return;
     }
 }
