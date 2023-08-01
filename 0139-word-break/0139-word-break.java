@@ -1,23 +1,18 @@
 class Solution {
     public boolean wordBreak(String s, List<String> wordDict) {
         int len = s.length();
-        boolean[][] dp = new boolean[len][len];
-        for (int j = 0; j < len; j++) {
-            for (int i = j; i >= 0; i--) {
-                for (String w: wordDict) {
-                    if (i + w.length() == j + 1 && s.substring(i, i + w.length()).equals(w)) {
-                        dp[i][j] = true;
-                        break;
-                        // System.out.println("c1:" + s.substring(i,j+1));
-                    } else if (i + w.length() <= j && s.substring(i, i + w.length()).equals(w)) {
-                        dp[i][j] = dp[i + w.length()][j];
-                        if (dp[i][j]) break;
-                        // System.out.println("c2:" + s.substring(i + w.length(), 1+j)  +" " + dp[i + w.length()][j]);
-                    }
-                }
+        boolean[] dp = new boolean[len + 1];
+        dp[len] = true;
+        for (int i = len - 1; i >= 0; i--) {
+            for (String w: wordDict) {
+                if (
+                    (i + w.length() <= len) &&
+                    (s.substring(i, i + w.length()).startsWith(w))
+                )
+                    dp[i] = dp[i + w.length()];
+                if (dp[i]) break;
             }
         }
-        
-        return dp[0][len - 1];
+        return dp[0];
     }
 }
