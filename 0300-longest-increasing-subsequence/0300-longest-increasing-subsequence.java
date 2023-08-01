@@ -14,9 +14,9 @@ class Solution {
             }
         }
         
-        for (int i : dp) {
-            System.out.print(i + " ");
-        }
+        // for (int i : dp) {
+        //     System.out.print(i + " ");
+        // }
         return max;
     }
 }
