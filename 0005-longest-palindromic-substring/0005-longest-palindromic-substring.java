@@ -1,6 +1,8 @@
 class Solution {
     public String longestPalindrome(String s) {
         boolean[][] dp = new boolean[s.length()][s.length()];
+        int max = 0;
+        String ss = "";
         for(int i = s.length() - 1; i >= 0; i--) {
             for(int j = i; j < s.length(); j++) {
                 if (s.charAt(j) == s.charAt(i)) {
@@ -10,12 +12,6 @@ class Solution {
                       dp[i][j] = true;
                    }
                 }
-            }
-        }
-        int max = 0;
-        String ss = "";
-        for (int i = 0; i < s.length(); i++) {
-            for (int j = 0; j < s.length(); j++) {
                 if (dp[i][j]) {
                     if (j - i + 1 > max) {
                         max = j - i + 1;
