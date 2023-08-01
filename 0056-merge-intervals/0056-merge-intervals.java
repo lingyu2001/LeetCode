@@ -10,8 +10,8 @@ class Solution {
                 l.add(new int[]{s, t});
                 s = intervals[i][0];
                 t = intervals[i][1];
-            } else if (intervals[i][1] < s) {
-                l.add(new int[]{intervals[i][0],intervals[i][1]});
+            // } else if (intervals[i][1] < s) {
+            //     l.add(new int[]{intervals[i][0],intervals[i][1]});
             } else {
                 s = Math.min(s, intervals[i][0]);
                 t = Math.max(t, intervals[i][1]);
