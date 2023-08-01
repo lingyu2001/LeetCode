@@ -27,14 +27,6 @@ class Solution {
         
         if (l.size() == 0) l.add(new int[]{newInterval[0],newInterval[1]});
         // System.out.println(l.size());
-        int[][] res = new int[l.size()][2];
-        int j = 0;
-        for (int[] k : l) {
-            // System.out.println(k[0] + " " + k[1]);
-            res[j][0] = k[0];
-            res[j][1] = k[1];
-            j++;
-        }
-        return res;
+        return l.toArray(new int[l.size()][]);
     }
 }
