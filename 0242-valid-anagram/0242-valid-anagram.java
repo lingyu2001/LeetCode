@@ -1,28 +1,22 @@
 class Solution {
-    // solution1
-    public boolean isAnagram1(String s, String t) {
-        if (s.length() != t.length()) return false;
-        int[] ints = new int[26];
-        for (int i = 0; i < s.length(); i++) {
-            ints[s.charAt(i) - 'a']++;
-        }
-        for (int i = 0; i < t.length(); i++) {
-            ints[t.charAt(i) - 'a']--;
-            if (ints[t.charAt(i) - 'a'] < 0) return false;
-        }
-        return true;
-    }
-    
-    // solution2
     public boolean isAnagram(String s, String t) {
-        if (s.length() != t.length()) return false;
-        char[] s1 = s.toCharArray();
-        char[] t1 = t.toCharArray();
-        Arrays.sort(s1);
-        Arrays.sort(t1);
-        for (int i = 0; i < s.length(); i++) {
-            if (s1[i] != t1[i]) return false;
+        // check if len(s) == len(t), no--> return false
+        int len1 = s.length();
+        int len2 = t.length();
+        if (len1 != len2) return false;
+        // store s in the set
+        int[] chars = new int[26];
+        for (int i = 0; i < len1; i++) {
+            chars[s.charAt(i) - 'a']++;
+        }
+        // check t
+        // iterate each char c in t
+        for (int i = 0; i < len2; i++) {
+            chars[t.charAt(i) - 'a']--;
+            if (chars[t.charAt(i) - 'a'] < 0) return false;
         }
         return true;
+        // if the number of c in the set < 0, then return false;
+
     }
 }
