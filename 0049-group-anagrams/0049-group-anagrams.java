@@ -1,29 +1,28 @@
 class Solution {
-    //1207
-    List<List<String>> res = new ArrayList<>();
-    Map<String,List<String>> map =  new HashMap<>();
     public List<List<String>> groupAnagrams(String[] strs) {
-        // iterate each str in strs
-        // for each str 
-            // calculate the hashValue of str(the count of the charatcers in the str)
-            // if the hash is not in the map --> create a key and add the str 
-            // if it is already in the map --> add the str to the list
-        // iterate the whole key in map and add all values in res;
-        for (String str : strs) {
-            int[] cnt = new int[26];
-            // count the value
-            for (char c : str.toCharArray()) {
-                cnt[c - 'a']++;
-            }
-            String key = Arrays.toString(cnt);
-            if (map.containsKey(key)) {
-                map.get(key).add(str);
-            } else {
-                map.put(key, new ArrayList<>());
-                map.get(key).add(str);
+        // create a hashmap
+        // iterate each word, sort the word, check if it is in hashmap, if yes, add the original word to the list, otherwise, 
+        // create a new list for the value
+        Map<String, List<String>> m = new HashMap<>();
+        for (String s: strs) {
+            String ss = new String(s);
+            // System.out.println(ss==s);
+            char[] c = s.toCharArray(); 
+            Arrays.sort(c);
+            // System.out.println(c);
+            String hash = Arrays.toString(c);
+            if (m.containsKey(hash)) {
+                List<String> l = m.get(hash);
+                l.add(ss);
+                m.put(hash,l);
+            }else {
+                List<String> l = new ArrayList<String>();
+                l.add(ss);
+                m.put(Arrays.toString(c), l);
             }
         }
-        res.addAll(map.values());
+        List<List<String>> res = new ArrayList<>();
+        res.addAll(m.values());
         return res;
     }
 }
