@@ -11,12 +11,8 @@ class Solution {
                 right++;
                 max = Math.max(set.size(), max);
             }else {
-                while(set.contains(s.charAt(right))) {
-                    set.remove(s.charAt(left));
-                    left++;
-                }
-                set.add(s.charAt(right));
-                right++;
+                set.remove(s.charAt(left));
+                left++;
             } 
         }
         return max;
