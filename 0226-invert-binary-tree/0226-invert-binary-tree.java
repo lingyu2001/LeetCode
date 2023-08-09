@@ -15,24 +15,10 @@
  */
 class Solution {
     public TreeNode invertTree(TreeNode root) {
-        Queue<TreeNode> q = new ArrayDeque<>();
-        if (root != null) q.offer(root);
-        while (!q.isEmpty()) {
-            int size = q.size();
-            for (int i = 0; i < size; i++) {
-                TreeNode t = q.poll();
-                swap(t);
-                if (t.left != null) q.offer(t.left);
-                if (t.right != null) q.offer(t.right);
-            }
-        }
+        if (root == null) return null;
+        TreeNode t = invertTree(root.right);
+        root.right = invertTree(root.left);
+        root.left = t;
         return root;
-    }
-    
-    public void swap(TreeNode root) {
-        if (root == null) return;
-        TreeNode t = root.left;
-        root.left = root.right;
-        root.right = t;
     }
 }
