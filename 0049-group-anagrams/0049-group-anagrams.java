@@ -11,13 +11,10 @@ class Solution {
             }
             String hash = Arrays.toString(c);
             if (m.containsKey(hash)) {
-                List<String> l = m.get(hash);
-                l.add(s);
-                m.put(hash,l);
-            }else {
-                List<String> l = new ArrayList<String>();
-                l.add(s);
-                m.put(hash, l);
+                m.get(hash).add(s);
+            } else {
+                m.put(hash, new ArrayList<>());
+                m.get(hash).add(s);
             }
         }
         List<List<String>> res = new ArrayList<>();
