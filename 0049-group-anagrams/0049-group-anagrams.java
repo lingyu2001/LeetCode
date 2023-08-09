@@ -5,20 +5,19 @@ class Solution {
         // create a new list for the value
         Map<String, List<String>> m = new HashMap<>();
         for (String s: strs) {
-            String ss = new String(s);
-            // System.out.println(ss==s);
-            char[] c = s.toCharArray(); 
-            Arrays.sort(c);
-            // System.out.println(c);
+            int[] c = new int[26];
+            for (char cc: s.toCharArray()) {
+                c[cc - 'a']++;
+            }
             String hash = Arrays.toString(c);
             if (m.containsKey(hash)) {
                 List<String> l = m.get(hash);
-                l.add(ss);
+                l.add(s);
                 m.put(hash,l);
             }else {
                 List<String> l = new ArrayList<String>();
-                l.add(ss);
-                m.put(Arrays.toString(c), l);
+                l.add(s);
+                m.put(hash, l);
             }
         }
         List<List<String>> res = new ArrayList<>();
