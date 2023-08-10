@@ -1,43 +1,33 @@
 class Solution {
-    List<List<Integer>> result = new ArrayList<>();
-    List<Integer> current = new ArrayList<>();
     public List<List<Integer>> threeSum(int[] nums) {
         Arrays.sort(nums);
-        // -4 -1 -1 0 1 2
-        if (nums[0] > 0 || nums[nums.length - 1] < 0) return result;
+        List<List<Integer>> res = new ArrayList<>();
+        if (nums[0] > 0 || nums[nums.length - 1] < 0) return res;
         for (int i = 0; i < nums.length - 2; i++) {
-            // distinct
-            if (i > 0 && nums[i] == nums[i - 1]) {
+            if (i > 0 && nums[i] == nums[i - 1]) {  // 去重a
                 continue;
             }
-            current.add(nums[i]);
-            //a + b = -nums[i]
+            int target = -nums[i];
             int left = i + 1, right = nums.length - 1;
             while (left < right) {
-                if (nums[left] + nums[right] == -nums[i]) {
-                    current.add(nums[left]);
-                    current.add(nums[right]);
-                    result.add(new ArrayList<>(current));
-                    current.clear();
-                    current.add(nums[i]);
-                    // distinct a 
-                    while (left < right && nums[left] == nums[left + 1])  {
-                        left++; 
-                    }
-                    // distinct b
-                    while (left < right && nums[right] == nums[right - 1]) {
-                        right--;
-                    }
+                if (nums[left] + nums[right] == target) {
+                    ArrayList<Integer> arr = new ArrayList<>();
+                    arr.add(nums[i]);
+                    arr.add(nums[left]);
+                    arr.add(nums[right]);
+                    res.add(arr);
+                    // 对b，c去重
+                    while (left < right && nums[left] == nums[left + 1]) left++;
+                    while (left < right && nums[right] == nums[right - 1]) right--;
                     left++;
                     right--;
-                } else if (nums[left] + nums[right] < -nums[i]) {
+                } else if (nums[left] + nums[right] < target) {
                     left++;
                 } else {
                     right--;
                 }
             }
-            current.clear();
         }
-        return result;
+        return res;
     }
 }
