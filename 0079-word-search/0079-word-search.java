@@ -1,6 +1,5 @@
 class Solution {
-    int ROW;
-    int COL;
+    int ROW, COL;
     boolean[][] used;
     public boolean exist(char[][] board, String word) {
         ROW = board.length;
@@ -16,18 +15,17 @@ class Solution {
     
     public boolean helper(char[][] b, String w, int i, int j, int cIndex) {
         if (cIndex == w.length()) return true;
-        if (i < 0||
-           i >= ROW||
-           j < 0||
-           j >= COL||
-           b[i][j] != w.charAt(cIndex)||
+        if (i < 0 || i >= ROW ||
+           j < 0 || j >= COL || 
+           b[i][j] != w.charAt(cIndex) ||
            used[i][j]) return false;
         used[i][j] = true;
         boolean res = (
                         helper(b,w,i+1,j,cIndex+1) ||
                         helper(b,w,i-1,j,cIndex+1) ||
                         helper(b,w,i,j+1,cIndex+1) ||
-                        helper(b,w,i,j-1,cIndex+1));
+                        helper(b,w,i,j-1,cIndex+1)
+        );
         used[i][j] = false;
         return res;
     }
