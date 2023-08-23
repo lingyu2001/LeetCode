@@ -15,33 +15,26 @@
  */
 class Solution {
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        return helper(preorder,0,preorder.length,inorder,0,inorder.length);
+        return helper(preorder, inorder);
     }
     
-    public TreeNode helper(int[] preorder,int prebegin, int preend, int[] inorder, int inbegin, int inend) {
-        if (inbegin == inend) return null;
-        TreeNode root = new TreeNode(preorder[prebegin]);
-        //leaf
-        if (preend - prebegin == 1) return root;
-        
+    public TreeNode helper(int[] preorder, int[] inorder) {
+        if (preorder.length == 0) return null;
         int i = 0;
-        for (i = inbegin; i < inend; i++) {
-            if (inorder[i] == root.val) break;
+        for (; i < inorder.length; i++) {
+            if (inorder[i] == preorder[0]) {
+                break;
+            } 
         }
-        
-        int inLeftBegin = inbegin;
-        int inLeftEnd = i;
-        int preLeftBegin = prebegin + 1;
-        int preLeftEnd = preLeftBegin + (inLeftEnd - inLeftBegin);
-        
-        int inRightBegin = i + 1;
-        int inRightEnd = inend;
-        int preRightBegin = preLeftEnd;
-        int preRightEnd = preend;
-        
-        root.left = helper(preorder, preLeftBegin, preLeftEnd,inorder,inLeftBegin, inLeftEnd);
-        root.right = helper(preorder, preRightBegin,preRightEnd, inorder, inRightBegin,inRightEnd);
+        TreeNode root = new TreeNode(preorder[0]);
+        root.left = helper(
+            Arrays.copyOfRange(preorder, 1, i + 1),
+            Arrays.copyOfRange(inorder, 0,i)
+        );
+        root.right = helper(
+            Arrays.copyOfRange(preorder, i + 1, preorder.length),
+            Arrays.copyOfRange(inorder, i + 1, inorder.length)
+        );
         return root;
     }
 }
-    
