@@ -19,15 +19,13 @@ class Solution {
     public boolean isCyclic(int[][] prerequisites, int n) {
         if (used[n] == 2) {
             return true;
-        } 
+        } else if (used[n] == 1) return false;
         used[n] = 2;
         ArrayList<Integer> list = map.get(n);
         for (int i = 0; i < list.size(); i++) {
-            if (used[list.get(i)] != 1) {
                 if (isCyclic(prerequisites, list.get(i))) {
                     return true;
                 }
-            }
         }
         used[n] = 1;
         return false;
