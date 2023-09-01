@@ -14,21 +14,21 @@ class Node {
 */
 
 class Solution {
+    Map<Node, Node> map = new HashMap<>();
     public Node copyRandomList(Node head) {
-        // create each node
-        Map<Node, Node> map = new HashMap<>();
+        if (head == null) return null;
+        //copy
         Node p = head;
         while (p != null) {
-            Node t = new Node(p.val);
-            map.put(p, t);
+            map.put(p, new Node(p.val));
             p = p.next;
         }
-        // link the list
+        // connect
         p = head;
         while (p != null) {
-            Node t = map.get(p);
-            t.next = map.get(p.next);
-            t.random = map.get(p.random);
+            Node newNode = map.get(p);
+            newNode.next = map.get(p.next);
+            newNode.random = map.get(p.random);
             p = p.next;
         }
         return map.get(head);
