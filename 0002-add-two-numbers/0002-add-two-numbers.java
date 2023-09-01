@@ -10,31 +10,28 @@
  */
 class Solution {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        ListNode head = new ListNode(), p = head, p1 = l1, p2 = l2;
-        int d = 0, k = 0;
-        while (p1 != null || p2 != null) {
-            int t = (p1 != null? p1.val:0) + (p2 != null? p2.val:0);
-            p.val = (t + d) % 10;
-            p.next = new ListNode();
-            p = p.next;
-            k++;
-            d = (t + d) / 10;
-            if (p1 != null) p1 = p1.next;
-            if (p2 != null) p2 = p2.next;
+        int digit = 0;
+        int res = 0;
+        ListNode head = new ListNode();
+        ListNode t = head;
+        ListNode p = l1, q = l2;
+        while (p != null || q != null) {
+            res *= 10;
+            int pval = p == null? 0 : p.val;
+            int qval = q == null? 0 : q.val;
+            t.val = (pval + qval + digit) % 10;
+            digit = (pval + qval + digit) / 10;
+            p = p == null ? null : p.next;
+            q = q == null ? null : q.next;
+            if (p != null || q != null) {
+                t.next = new ListNode();
+                t = t.next;
+            }
         }
-        if (d > 0) {
-            p.val = d;
-            p.next = new ListNode();
-            p = p.next;
+        if (digit > 0) {
+            t.next = new ListNode(digit);
         }
-        // delete the last 0
-        ListNode t1 = head;
-        while (!(t1.next != null && t1.next.next == null)) {
-            // System.out.print(t1.val);
-            t1 = t1.next;
-        }
-        // System.out.println();
-        t1.next = null;
+        
         return head;
     }
 }
