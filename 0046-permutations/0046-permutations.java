@@ -4,22 +4,20 @@ class Solution {
     boolean[] used;
     public List<List<Integer>> permute(int[] nums) {
         used = new boolean[nums.length];
-        helper(nums,used);
+        helper(nums, 0);
         return res;
     }
     
-    public void helper(int[] nums, boolean[] used) {
-        if (path.size() >= nums.length) {
+    public void helper(int[] nums, int index) {
+        if (path.size() == nums.length) {
             res.add(new ArrayList<>(path));
-            return;
+            return ;
         }
-        
-        // k < n
-        for (int i = 0; i < nums.length; i++) {
+        for (int i = 0; i < nums.length ; i++) {
             if (used[i]) continue;
-            path.add(nums[i]);
             used[i] = true;
-            helper(nums, used);
+            path.add(nums[i]);
+            helper(nums, i + 1);
             path.removeLast();
             used[i] = false;
         }
