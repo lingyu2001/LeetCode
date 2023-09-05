@@ -7,8 +7,8 @@ class Solution {
         }
         int i = 0, j = 0;
         while (i < s.length()) {
-            // j = Math.max(j, arr[s.charAt(i) - 'a']);
-            j = arr[s.charAt(i) - 'a'];
+            j = Math.max(j, arr[s.charAt(i) - 'a']);
+            // j = arr[s.charAt(i) - 'a'];
             int cnt = 0;
             while (i <= j) {
                 j = Math.max(j, arr[s.charAt(i) - 'a']);
