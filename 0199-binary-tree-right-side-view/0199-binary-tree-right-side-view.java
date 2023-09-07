@@ -20,14 +20,12 @@ class Solution {
         if (root != null) queue.offer(root);
         while (!queue.isEmpty()) {
             int size = queue.size();
-            TreeNode t = new TreeNode(-101);
-            while (size != 0) {
-                size--;
-                t = queue.poll();
+            for (int i = 0; i < size; i++) {
+                TreeNode t = queue.poll();
+                if (i == size - 1) res.add(t.val);
                 if (t.left != null) queue.offer(t.left);
                 if (t.right != null) queue.offer(t.right);
             }
-            if (t.val != -101) res.add(t.val);
         }
         return res;
     }
