@@ -16,16 +16,17 @@
 class Solution {
     int cnt = 0;
     public int goodNodes(TreeNode root) {
-        helper(root, root.val);
+        dfs(root, root.val);
         return cnt;
     }
-    public void helper(TreeNode root, int max) {
-        if (root == null) return;
-        if (root.val >= max) {
+    
+    public void dfs(TreeNode root, int maxVal) {
+        if (root == null) return ;
+        if (root.val >= maxVal) {
             cnt++;
-            max = root.val;
+            maxVal = root.val;
         }
-        helper(root.left,max);      
-        helper(root.right,max);
+        dfs(root.left, maxVal);
+        dfs(root.right, maxVal);
     }
 }
