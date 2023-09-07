@@ -24,19 +24,18 @@ class Twitter {
         set.add(userId);
         PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> b[0] - a[0]);
         for (int id : set) {
-            List<int[]> tweets = mapTweet.get(id);
-            if (tweets != null)
-                for(int[] tweet: tweets) {
-                    pq.offer(tweet);
-                }
-        }
-        if (pq.size() >= 10)
-            for (int i = 0; i < 10; i++) {
-                res.add(pq.poll()[1]);
+            if (mapTweet.containsKey(id)) {
+                int i = mapTweet.get(id).size() - 1;
+                int[] tweet = mapTweet.get(id).get(i);
+                pq.offer(new int[]{tweet[0], tweet[1], id, --i});
             }
-        else {
-            while (!pq.isEmpty()) {
-                res.add(pq.poll()[1]);
+        }
+        while(!pq.isEmpty() && res.size() < 10) {
+            int[] tweet = pq.poll();
+            res.add(tweet[1]);
+            if (tweet[3] >= 0) {
+                int[] newTweet = mapTweet.get(tweet[2]).get(tweet[3]);
+                pq.offer(new int[] {newTweet[0], newTweet[1],tweet[2],tweet[3] - 1});
             }
         }
         return res;
