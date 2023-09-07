@@ -12,8 +12,8 @@ class Twitter {
     public void postTweet(int userId, int tweetId) {
         mapTweet.computeIfAbsent(userId, k -> new ArrayList<>());
         mapTweet.computeIfPresent(userId, (k, v) -> {
-          v.add(new int[]{time, tweetId});
-          return v;
+            v.add(new int[]{time, tweetId});
+            return v;
         });
         time++;
     }
