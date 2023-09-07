@@ -1,19 +1,18 @@
 class Solution {
     public List<Integer> partitionLabels(String s) {
         List<Integer> res = new ArrayList<>();
-        int[] arr = new int[26];
+        Map<Character, Integer> map = new HashMap<>();
         for (int i = 0; i < s.length(); i++) {
-            arr[s.charAt(i) - 'a'] = i;
+            map.put(s.charAt(i), i);
         }
         int i = 0, j = 0;
         while (i < s.length()) {
-            j = Math.max(j, arr[s.charAt(i) - 'a']);
-            // j = arr[s.charAt(i) - 'a'];
             int cnt = 0;
+            j = map.get(s.charAt(i));
             while (i <= j) {
-                j = Math.max(j, arr[s.charAt(i) - 'a']);
-                i++;
                 cnt++;
+                j = Math.max(j, map.get(s.charAt(i)));
+                i++;
             }
             res.add(cnt);
         }
