@@ -1,22 +1,22 @@
 class Solution {
-    LinkedList<String> res = new LinkedList<>();
-    String[] strs = new String[]{"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+    List<String> res = new ArrayList<>();
     StringBuilder sb = new StringBuilder();
+    String[] strs = new String[] {"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
     public List<String> letterCombinations(String digits) {
-        if(digits.equals("")) return res;
+        if (digits.length() == 0) return res;
         helper(digits, 0);
         return res;
     }
     
-    public void helper(String digits, int start){
-        if(sb.length() == digits.length()) {
+    public void helper(String digits, int index) {
+        if (sb.length() == digits.length()) {
             res.add(sb.toString());
-            return ;
-        }
-        for (int i = start; i < digits.length(); i++) {
+            return;
+        } 
+        for (int i = index; i < digits.length(); i++) {
             int num = digits.charAt(i) - '0';
-            for (char c : strs[num].toCharArray()) {
-                sb.append(c);
+            for (int j = 0; j < strs[num].length(); j++) {
+                sb.append(strs[num].charAt(j));
                 helper(digits, i + 1);
                 sb.deleteCharAt(sb.length() - 1);
             }
