@@ -7,18 +7,18 @@ class Solution {
             parent[i] = i + 1;
         }
         for (int[] e : edges) {
-            if (find(e[0]) == find(e[1])) return e;
-            union(e[0], e[1]);
+            if (find(e[0]) == find(e[1])) return new int[]{e[0],e[1]};
+            else union(e[0], e[1]);
         }
-        return new int[]{};
+        return null;
     }
 
-    public int find(int k) {
-        if (parent[k - 1] == k) return k;
-        else return find(parent[k - 1]);
+    public int find(int i) {
+        if (parent[i - 1] == i) return i;
+        return find(parent[i - 1]);
     }
 
-    public void union(int i, int j) {
-        parent[find(j) - 1] = find(i);
+    public void union (int i, int j) {
+        parent[find(i) - 1] = find(j);
     }
 }
