@@ -1,46 +1,37 @@
-class State {
-    int id;
-    int dist;
-    public State(int id, int dist) {
-        this.id = id;
-        this.dist = dist;
-    }
-}
 class Solution {
+    HashMap<Integer, List<int[]>> map = new HashMap<>();
     public int networkDelayTime(int[][] times, int n, int k) {
-        // create a graph
-        List<int[]>[] graph = new LinkedList[n + 1];
-        for (int i = 1; i <= n; i++) {
-            graph[i] = new LinkedList<>();
+        for (int i = 1; i <= n; i++ )
+            map.put(i, new ArrayList<int[]>());
+        // create the graph
+        for(int[] e : times) {
+            List<int[]> list = map.getOrDefault(e[0], new ArrayList<>());
+            list.add(new int[]{e[1], e[2]});
+            map.put(e[0], list);
         }
-        for (int[] e : times) {
-            int curNode = e[0];
-            int tgtNode = e[1];
-            graph[curNode].add(new int[]{tgtNode, e[2]});
-        }
-        PriorityQueue<State> pq = new PriorityQueue<>((a, b) -> a.dist - b.dist);
-        int[] fromStartToK = new int[n + 1];
-        Arrays.fill(fromStartToK, Integer.MAX_VALUE);
-        fromStartToK[k] = 0;
-        pq.offer(new State(k, 0));
-        while(!pq.isEmpty()) {
-            State s = pq.poll();
-            int curr = s.id;
-            int dist = s.dist;
-            if (dist > fromStartToK[curr]) continue;
-            for (int nei[] : graph[curr]) {
-                if (fromStartToK[nei[0]] > nei[1] + dist) {
-                    fromStartToK[nei[0]] = nei[1] + dist;
-                    pq.offer(new State(nei[0], nei[1] + dist));
+        // run dijkstra 
+        PriorityQueue<int[]> pq = new PriorityQueue<>( (a,b) -> a[1] - b[1]);
+        int[] dist = new int[n + 1];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        dist[k] = 0;
+        pq.offer(new int[]{k, 0}); 
+        while (!pq.isEmpty()) {
+            int[] t = pq.poll();
+            int id = t[0];
+            int distStart = t[1];
+            if (distStart > dist[id]) continue;
+            for (int[] nei : map.get(id)) {
+                if (distStart + nei[1] < dist[nei[0]]) {
+                    dist[nei[0]] = distStart + nei[1];
+                    pq.offer(new int[] {nei[0], dist[nei[0]]});
                 }
             }
         }
-        int res = 0;
-        for (int i = 1; i <= n; i++) {
-            if (fromStartToK[i] == Integer.MAX_VALUE) return -1;
-            else res = Math.max(res, fromStartToK[i]);
+        int cnt = 0;
+        for (int i = 1; i<= n; i++) {
+            if (dist[i] == Integer.MAX_VALUE) return -1;
+            cnt = Math.max(cnt, dist[i]);
         }
-        return res;
+        return cnt;
     }
-
 }
