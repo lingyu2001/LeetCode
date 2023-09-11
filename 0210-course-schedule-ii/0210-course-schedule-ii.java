@@ -1,32 +1,36 @@
 class Solution {
+    HashMap<Integer, List<Integer>> map = new HashMap<>();
     public int[] findOrder(int numCourses, int[][] prerequisites) {
-        int[] topo = new int[numCourses];
+        // create the graph
         int[] degrees = new int[numCourses];
-        HashMap<Integer, List<Integer>> map = new HashMap<>();
-        for (int[] pre : prerequisites) {
-            List<Integer> list = map.getOrDefault(pre[1], new ArrayList<>());
-            list.add(pre[0]);
-            map.put(pre[1], list);
-            degrees[pre[0]]++;
+        for (int[] p : prerequisites) {
+            int pre = p[1];
+            int post = p[0];
+            List<Integer> list = map.getOrDefault(pre, new ArrayList<>());
+            list.add(post);
+            map.put(pre,list);
+            degrees[post]++;
         }
         Queue<Integer> queue = new LinkedList<>();
-        for (int i = 0; i < numCourses; i++) {
-            if (degrees[i] == 0)
-                queue.offer(i);
+        for (int i = 0; i < degrees.length; i++) {
+            if (degrees[i] == 0) queue.offer(i);
         }
-        int i = 0;
+        int[] res = new int[numCourses];
+        // bfs
+        int index = 0;
         while (!queue.isEmpty()) {
-            topo[i++] = queue.poll();
-            if (map.containsKey(topo[i - 1])) {
-                for (int k : map.get(topo[i - 1])) {
-                    degrees[k]--;
-                    if (degrees[k] == 0) {
-                        queue.offer(k);
-                    }
-                }
+            int k = queue.poll();
+            res[index++] = k;
+            if (map.containsKey(k)) {
+                for (int i : map.get(k)) {
+                    degrees[i]--;
+                    if (degrees[i] == 0) queue.offer(i);
+                }   
+                // if (degrees[k] == 0) queue.offer(k);
             }
+            
         }
-        if (i == numCourses) return topo;
+        if (index == numCourses) return res;
         else return new int[]{};
     }
 }
