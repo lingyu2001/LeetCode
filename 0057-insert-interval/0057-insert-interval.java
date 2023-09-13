@@ -1,32 +1,22 @@
 class Solution {
     public int[][] insert(int[][] intervals, int[] newInterval) {
-        List<int[]> l = new ArrayList<>();
-        int startInsert = newInterval[0];
-        int endInsert = newInterval[1];
-        int i = 0;
-        for (; i < intervals.length; i++) {
-            int starti = intervals[i][0];
-            int endi = intervals[i][1];
-            if (endi < startInsert) l.add(new int[]{intervals[i][0],intervals[i][1]});
-            else if (endInsert < starti) {
-                break;
+        List<int[]> res= new ArrayList<>();
+        if (intervals.length == 0) return new int[][]{newInterval};
+        int start = newInterval[0], end = newInterval[1];
+        for (int i = 0; i < intervals.length; i++) {
+            if (intervals[i][0] > end) {
+                res.add(new int[]{start, end});
+                start = intervals[i][0];
+                end = intervals[i][1];
+            } else if (start > intervals[i][1]) {
+                res.add(intervals[i]);
             } else {
-                //overlapping 
-                startInsert = Math.min(startInsert, starti);
-                endInsert = Math.max(endInsert, endi);
+                start = Math.min(intervals[i][0], start);
+                end = Math.max(intervals[i][1], end);
             }
         }
-        l.add(new int[]{startInsert, endInsert});
-        
-        // System.out.println(i);
-        // after break;
-        for (; i < intervals.length; i++) {
-            // System.out.println(intervals[i][0] + " " + intervals[i][1]);
-            l.add(new int[]{intervals[i][0],intervals[i][1]});
-        }
-        
-        if (l.size() == 0) l.add(new int[]{newInterval[0],newInterval[1]});
-        // System.out.println(l.size());
-        return l.toArray(new int[l.size()][]);
+        if (res.size() != 0 && res.get(res.size() - 1)[0] == start &&  res.get(res.size() - 1)[1] == end) ;
+        else res.add(new int[]{start, end});
+        return res.toArray(new int[res.size()][]);
     }
 }
