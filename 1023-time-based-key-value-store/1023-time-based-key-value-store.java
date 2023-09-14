@@ -5,7 +5,7 @@ class TimeMap {
     }
     
     public void set(String key, String value, int timestamp) {
-        List<Pair<String, Integer>> list = map.getOrDefault(key, new ArrayList<>());
+        List<Pair<String, Integer>> list = map.getOrDefault(key, new ArrayList<Pair<String, Integer>>());
         list.add(new Pair(value, timestamp));
         map.put(key, list);
     }
@@ -13,36 +13,19 @@ class TimeMap {
     public String get(String key, int timestamp) {
         if (!map.containsKey(key)) return "";
         List<Pair<String, Integer>> list = map.get(key);
-        // return search(list, timestamp);
-        return search(timestamp, list);
-    }
-
-    public String search(int t, List<Pair<String, Integer>> list) {
-        int right = list.size() - 1;
-        int left = 0;
+        // System.out.println(list.size());
+        int i = 0;
+        int j = list.size() - 1;
         String res = "";
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-            if (list.get(mid).getValue() <= t) {
-                left = mid + 1; 
-                res = list.get(mid).getKey();
-            }else right = mid - 1;
+        while (i <= j) {
+            int mid = i + (j - i) / 2;
+            if (list.get(mid).getValue() <= timestamp) {
+                res = list.get(mid).getKey();   
+                i = mid + 1;
+            } else j = mid - 1;  
         }
         return res;
     }
-
-    // public String search(List<Pair<String, Integer>> list, int timestamp) {
-    //     int start = 0;
-    //     int end = list.size() - 1;
-    //     while (start < end) {
-    //         int mid = start + (end - start + 1) / 2;
-    //         if (list.get(mid).getValue() <= timestamp) start = mid; else end =
-    //             mid - 1;
-    //     }
-    //     return list.get(start).getValue() <= timestamp
-    //         ? list.get(start).getKey()
-    //         : "";
-    // }
 }
 
 /**
