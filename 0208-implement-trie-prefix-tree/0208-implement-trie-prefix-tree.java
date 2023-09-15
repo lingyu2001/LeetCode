@@ -16,25 +16,26 @@ class Trie {
     }
     
     public boolean search(String word) {
-        Node cur = startsWithNode(word);
-        return cur != null && cur.isWord;
+        Node searchRet = retNode(word);
+        if (searchRet == null) return false;
+        return searchRet.isWord;
     }
     
     public boolean startsWith(String prefix) {
-        Node cur = startsWithNode(prefix);
-        return cur != null;
+        Node searchRet = retNode(prefix);
+        if (searchRet == null) return false;
+        else return true;
     }
     
-    public Node startsWithNode(String prefix) {
+    public Node retNode(String word) { 
         Node cur = root;
-        for (char c : prefix.toCharArray()) {
+        for (char c : word.toCharArray()) {
             if (cur.children[c - 'a'] == null) return null;
             cur = cur.children[c - 'a'];
         }
         return cur;
     }
 }
-
 class Node {
     char c;
     Node[] children;
