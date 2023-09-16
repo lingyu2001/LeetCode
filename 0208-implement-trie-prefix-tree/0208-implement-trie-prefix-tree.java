@@ -5,46 +5,43 @@ class Trie {
     }
     
     public void insert(String word) {
-        Node cur = root;
+        Node curr = root;
         for (char c : word.toCharArray()) {
-            if (cur.children[c - 'a'] == null) {
-                cur.children[c - 'a'] = new Node(c);
-            }
-            cur = cur.children[c - 'a'];
+            if (curr.children[c - 'a'] == null) curr.children[c - 'a'] = new Node(c);
+            curr = curr.children[c - 'a'];
         }
-        cur.isWord = true;
+        curr.isWord = true;
     }
     
     public boolean search(String word) {
-        Node searchRet = retNode(word);
-        if (searchRet == null) return false;
-        return searchRet.isWord;
+        Node ret = returnNode(word);
+        return ret != null && ret.isWord;
     }
     
     public boolean startsWith(String prefix) {
-        Node searchRet = retNode(prefix);
-        if (searchRet == null) return false;
-        else return true;
+        Node ret = returnNode(prefix);
+        if (ret == null) return false;
+        return true;
     }
-    
-    public Node retNode(String word) { 
-        Node cur = root;
+
+    public Node returnNode(String word) {
+        Node curr = root;
         for (char c : word.toCharArray()) {
-            if (cur.children[c - 'a'] == null) return null;
-            cur = cur.children[c - 'a'];
+            if (curr.children[c - 'a'] == null) return null;
+            curr = curr.children[c - 'a'];
         }
-        return cur;
+        return curr;
     }
 }
 class Node {
     char c;
     Node[] children;
     boolean isWord;
-    
+
     public Node(char c) {
         this.c = c;
-        this.isWord = false;
-        this.children = new Node[26];
+        children = new Node[26];
+        isWord = false;
     }
 }
 
