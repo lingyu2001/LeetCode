@@ -1,23 +1,26 @@
 class Solution {
+    LinkedList<int[]> res = new LinkedList<>();
     public int[][] merge(int[][] intervals) {
-        Arrays.sort(intervals, Comparator.comparingInt(a -> a[0]));
-        List<int[]> l = new ArrayList<>();
-        int s = intervals[0][0];
-        int t = intervals[0][1];
-        int i = 1;
-        for (; i < intervals.length; i++) {
-            if (intervals[i][0] > t) {
-                l.add(new int[]{s, t});
-                s = intervals[i][0];
-                t = intervals[i][1];
-            } else if (intervals[i][1] < s) {
-                l.add(new int[]{intervals[i][0],intervals[i][1]});
+        Arrays.sort(intervals,(a,b) -> a[0] - b[0]);
+        int start = intervals[0][0], end = intervals[0][1];
+        for (int i = 1; i < intervals.length; i++) {
+            if (start > intervals[i][1]) {
+                // [interval] [start]
+                res.add(new int[]{intervals[i][0], intervals[i][1]});
+            } else if (end < intervals[i][0]) {
+                res.add(new int[]{start, end});
+                start = intervals[i][0];
+                end = intervals[i][1];
             } else {
-                s = Math.min(s, intervals[i][0]);
-                t = Math.max(t, intervals[i][1]);
+                start = Math.min(start, intervals[i][0]);
+                end = Math.max(end, intervals[i][1]);
             }
         }
-        l.add(new int[]{s, t});
-        return l.toArray(new int[l.size()][]);
+        if (res.size() == 0) res.add(new int[]{start, end});
+        else {
+            int[] last = res.getLast();
+            if (last[0] != start || last[1] != end) res.add(new int[]{start, end});
+        }
+        return res.toArray(new int[res.size()][2]);
     }
 }
