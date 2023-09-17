@@ -8,7 +8,8 @@ class Solution {
     
      public void helper(int[] nums, int index) {
          res.add(new ArrayList<>(path));
-         for (int i = index ; i < nums.length; i++) {
+        //  res.add(path);
+         for (int i = index; i < nums.length; i++) {
              path.add(nums[i]);
              helper(nums, i + 1);
              path.removeLast();
