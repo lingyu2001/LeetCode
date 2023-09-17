@@ -1,35 +1,40 @@
 class Solution {
     public List<Integer> spiralOrder(int[][] matrix) {
+        int row = matrix.length;
+        int col = matrix[0].length;
+        int upBoundry = 0, downBoundry = row - 1, leftBoundry = 0, rightBoundry = col - 1;
         List<Integer> res = new ArrayList<>();
-        int m = matrix.length, n = matrix[0].length;
-        int upperBound = 0, lowerBound = m - 1, leftBound = 0, rightBound = n - 1;
-        while (res.size() < m * n) {
-            if (upperBound <= lowerBound) {
-                for (int i = leftBound; i <= rightBound; i++) {
-                    res.add(matrix[upperBound][i]);
+        while (res.size() < row * col) {
+            // from left to right
+            if (upBoundry <= downBoundry) {
+                for (int i = leftBoundry; i <= rightBoundry; i++) {
+                    res.add(matrix[upBoundry][i]);
                 }
-                upperBound++;
+                upBoundry++;
             }
 
-            if (leftBound <= rightBound) {
-                for (int i = upperBound; i <= lowerBound; i++) {
-                    res.add(matrix[i][rightBound]);
+            // from top to down
+            if (leftBoundry <= rightBoundry) {
+                for (int i = upBoundry; i <= downBoundry; i++) {
+                    res.add(matrix[i][rightBoundry]);
                 }
-                rightBound--;
+                rightBoundry--;
             }
-            
-            if (upperBound <= lowerBound) {
-                for (int i = rightBound; i >= leftBound; i--) {
-                    res.add(matrix[lowerBound][i]);
+
+            // from right to left;
+            if (upBoundry <= downBoundry) {
+                for (int i = rightBoundry; i >= leftBoundry; i--) {
+                    res.add(matrix[downBoundry][i]);
                 }
-                lowerBound--;
+                downBoundry--;
             }
-            
-            if (leftBound <= rightBound) {
-                for (int i = lowerBound; i >= upperBound; i--) {
-                    res.add(matrix[i][leftBound]);
+
+            if (leftBoundry <= rightBoundry) {
+                // from down to top
+                for (int i = downBoundry; i >= upBoundry; i--) {
+                    res.add(matrix[i][leftBoundry]);
                 }
-                leftBound++;
+                leftBoundry++;
             }
         }
         return res;
