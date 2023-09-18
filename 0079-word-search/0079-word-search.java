@@ -1,32 +1,31 @@
 class Solution {
-    int ROW, COL;
-    boolean[][] used;
+    int row, col;
+    boolean res = false;
+    boolean[][] visited;
+    int[][] dir = new int[][]{{0, 1}, {0, -1}, {1, 0}, {-1 ,0}};
     public boolean exist(char[][] board, String word) {
-        ROW = board.length;
-        COL = board[0].length;
-        used = new boolean[ROW][COL];
-        for (int i = 0; i < ROW; i++) {
-            for (int j = 0; j < COL; j++) {
-                if (helper(board, word, i,j,0)) return true;
+        row = board.length;
+        col = board[0].length;
+        visited = new boolean[row][col];
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                helper(board, word, i, j, 0);
+                if (res) return true;
             }
         }
         return false;
     }
-    
-    public boolean helper(char[][] b, String w, int i, int j, int cIndex) {
-        if (cIndex == w.length()) return true;
-        if (i < 0 || i >= ROW ||
-           j < 0 || j >= COL || 
-           b[i][j] != w.charAt(cIndex) ||
-           used[i][j]) return false;
-        used[i][j] = true;
-        boolean res = (
-                        helper(b,w,i+1,j,cIndex+1) ||
-                        helper(b,w,i-1,j,cIndex+1) ||
-                        helper(b,w,i,j+1,cIndex+1) ||
-                        helper(b,w,i,j-1,cIndex+1)
-        );
-        used[i][j] = false;
-        return res;
+
+    public void helper(char[][] board, String word, int i, int j, int k) {
+        if (k >= word.length()) {
+            res = true; 
+            return;
+        }
+        if (i < 0 || j < 0 || i >= row || j >= col || word.charAt(k) != board[i][j] || visited[i][j]) return ;
+        visited[i][j] = true;
+        for (int[] d : dir) {
+            helper(board, word, i + d[0], j + d[1], k + 1);
+        }
+        visited[i][j] = false;
     }
 }
