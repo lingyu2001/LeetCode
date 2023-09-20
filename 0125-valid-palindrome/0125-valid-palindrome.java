@@ -6,7 +6,7 @@ class Solution {
         while (left < right) {
             while (left < right && !isAlphaNum(s.charAt(left))) left++;
             while (left < right && !isAlphaNum(s.charAt(right))) right--;
-            System.out.println(left + ":" + s.charAt(left) + " " + right + ":" + s.charAt(right));
+            // System.out.println(left + ":" + s.charAt(left) + " " + right + ":" + s.charAt(right));
             if (left < right && s.charAt(left) != s.charAt(right)) {
                 return false;
             }
