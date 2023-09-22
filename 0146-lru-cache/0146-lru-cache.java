@@ -30,8 +30,8 @@ class LRUCache {
         if (map.containsKey(key)){
             Node node = new Node(key, value);
             removeFromList(map.get(key));
-            map.put(key, node);
             addToList(node);
+            map.put(key, node);
         } else {
             if (map.size() >= capa) {
                 map.remove(tail.prev.key);
