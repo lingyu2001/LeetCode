@@ -8,9 +8,8 @@ class Solution {
             sum = sum % k;
             Integer index = map.get(sum);
             if (index != null) {
-                if (i - index > 1) return true;
-            }
-            else map.put(sum, i);
+                 if (i - index > 1) return true;
+            } else map.put(sum, i);
         }
         return false;
     }
