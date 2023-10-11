@@ -1,23 +1,18 @@
 class Solution {
     public int removeDuplicates(int[] nums) {
-        if (nums.length <= 2) return nums.length;
-        int i = 2, j = 2, cnt = 0;
-        if (nums[0] == nums[1]) cnt = 2;
-        else cnt = 1;
-        while (j < nums.length) {
-            if (nums[j] == nums[j - 1]) {
-                cnt++;
-                if (cnt > 2) {
-                    j++;
-                } else{
-                    nums[i++] = nums[j++];
-                }
-                
-            } else{
-                nums[i++] = nums[j++];
-                cnt = 1;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        int s = 0, f = 0;
+        while (f < nums.length) {
+            int cnt = map.getOrDefault(nums[f], 0);
+            if (cnt >= 2) {
+                f++;
+            } else {
+                map.put(nums[f], cnt + 1);
+                nums[s] = nums[f];
+                s++;
+                f++;
             }
         }
-        return i;
+        return s;
     }
 }
