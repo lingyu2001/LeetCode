@@ -4,7 +4,7 @@ class Solution {
         String res = "";
         for (int i = 0; i < n; i++) {
             String r1 = palindrome(s, i, i);
-            String r2 = palindrome(s, i, i + 1);
+            String r2 = palindrome(s, i - 1, i);
             res = res.length() > r1.length() ? res : r1;
             res = res.length() > r2.length() ? res : r2;
         }
