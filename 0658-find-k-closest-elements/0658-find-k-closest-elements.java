@@ -16,10 +16,10 @@ class Solution {
             if (left == -1) {
                 res.addLast(arr[right]);
                 right++;
-            } else if (right == arr.length) {
+            } else if (right >= arr.length) {
                 res.addFirst(arr[left]);
                 left--;
-            } else if (x - arr[left] > arr[right] - x) {
+            } else if (Math.abs(arr[right] - x) < Math.abs(arr[left] - x)) {
                 res.addLast(arr[right]);
                 right++;
             } else {
