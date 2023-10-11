@@ -9,17 +9,18 @@ class Solution {
             }else if (arr[mid] > x) r = mid - 1;
             else l = mid + 1;
         }
-        // System.out.println(l + "," + r);
+        System.out.println(l + "," + r);
         int left = l - 1, right = l;
         LinkedList<Integer> res = new LinkedList<>();
-        while (right - left - 1 < k) {
+        while (k > 0) {
+            k--;
             if (left == -1) {
                 res.addLast(arr[right]);
                 right++;
             } else if (right >= arr.length) {
                 res.addFirst(arr[left]);
                 left--;
-            } else if (Math.abs(arr[right] - x) < Math.abs(arr[left] - x)) {
+            } else if (Math.abs(arr[right] - x) < Math.abs(arr[left] - x))           {
                 res.addLast(arr[right]);
                 right++;
             } else {
