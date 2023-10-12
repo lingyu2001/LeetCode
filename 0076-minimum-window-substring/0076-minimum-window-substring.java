@@ -1,35 +1,41 @@
 class Solution {
     public String minWindow(String s, String t) {
-        // sliding window
-        // two pointer : left, right;
-        // how to move the sliding window?
-        //      keep moveing pointer right, until # of each character in the window is >= # of each character in t
-        //          how to calculate that? : int[] cntS, int[] cntT
-        //      then calculate the min window
-        //      then move pointer left
-        int[] cntS = new int[256];
-        int[] cntT = new int[256];
-        int now = 0, k = 0;
-        int r = 0, l = 0, minL = -1, minR = -1;
+        // corner case : len(s) < len(t) => return false
+        // construct the window: int[] array [a,b)
+        // move the window
+        // pointers: left, right
+        // valid: # of valid letters in the window
+        int left = 0, right = 0;
+        int[] tArr = new int[256];
+        HashSet<Character> set = new HashSet<>();
         for (char c : t.toCharArray()) {
-            cntT[c]++;
-            if (cntT[c] == 1) k++;
+            set.add(c);
+            tArr[c]++;
         }
-        for (; l < s.length(); l++) {
-            while (r < s.length() && now < k) {
-                cntS[s.charAt(r)]++;
-                if (cntS[s.charAt(r)] == cntT[s.charAt(r)]) now++;
-                r++;
+        int[] sArr = new int[256];
+        int valid = 0;
+        String res = "";
+        int len = Integer.MAX_VALUE;
+        while (right < s.length()) {
+            char r = s.charAt(right);
+            right++;
+            if (tArr[r] > 0) {
+                sArr[r]++;
+                if (tArr[r] == sArr[r]) valid++;
             }
-            if (now == k) {
-                if (minL == -1 || r - l < minR - minL) {
-                    minL = l;
-                    minR = r;
+            while (valid == set.size()) {
+                if (right - left < len) {
+                    res = s.substring(left, right);
+                    len = right - left;
+                }
+                char l = s.charAt(left);
+                left++;
+                if (tArr[l] > 0) {
+                    sArr[l]--;
+                    if (sArr[l] < tArr[l]) valid--;
                 }
             }
-            cntS[s.charAt(l)]--;
-            if (cntS[s.charAt(l)] < cntT[s.charAt(l)]) now--;
         }
-        return minL == -1 ? "" : s.substring(minL, minR);
+        return res;
     }
 }
