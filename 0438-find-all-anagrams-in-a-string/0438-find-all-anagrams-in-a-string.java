@@ -1,27 +1,32 @@
 class Solution {
     public List<Integer> findAnagrams(String s, String p) {
         List<Integer> res = new ArrayList<>();
-        if (s.length() < p.length()) return res;
-        int[] a = new int[26];
-        int[] b = new int[26];
-        for (int i = 0; i < p.length(); i++) {
-            a[s.charAt(i) - 'a']++;
-            b[p.charAt(i) - 'a']++;
+        int[] pArr = new int[256];
+        int[] sArr = new int[256];
+        int left = 0, right = 0, valid = 0;
+        HashSet<Character> set = new HashSet<>();
+        for (char c : p.toCharArray()) {
+            pArr[c]++;
+            set.add(c);
         }
-        if (areEqual(a,b)) res.add(0);
+        while (right < s.length()) {
+            char r = s.charAt(right);
+            right++;
+            if (set.contains(r)) {
+                sArr[r]++;
+                if (sArr[r] == pArr[r]) valid++;
+            }
 
-        for (int i = p.length(); i < s.length(); i++){
-            a[s.charAt(i - p.length()) - 'a']--;
-            a[s.charAt(i) - 'a']++;
-            if (areEqual(a,b)) res.add(i - p.length() + 1);
+            while (valid == set.size()) {
+                char l = s.charAt(left);
+                if (right - left == p.length()) res.add(left);
+                left++;
+                if (set.contains(l)) {
+                    sArr[l]--;
+                    if (sArr[l] < pArr[l]) valid--;
+                }
+            }
         }
         return res;
-    }
-
-    public boolean areEqual(int[] a, int[]b) {
-        for (int i = 0; i < 26; i++) {
-            if (a[i] != b[i]) return false;
-        }
-        return true;
     }
 }
