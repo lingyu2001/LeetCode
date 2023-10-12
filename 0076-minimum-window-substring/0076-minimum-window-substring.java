@@ -19,8 +19,8 @@ class Solution {
         while (right < s.length()) {
             char r = s.charAt(right);
             right++;
+            sArr[r]++;
             if (tArr[r] > 0) {
-                sArr[r]++;
                 if (tArr[r] == sArr[r]) valid++;
             }
             while (valid == set.size()) {
@@ -30,8 +30,8 @@ class Solution {
                 }
                 char l = s.charAt(left);
                 left++;
+                sArr[l]--;
                 if (tArr[l] > 0) {
-                    sArr[l]--;
                     if (sArr[l] < tArr[l]) valid--;
                 }
             }
