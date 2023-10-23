@@ -1,24 +1,29 @@
 class Solution {
     public List<List<String>> groupAnagrams(String[] strs) {
-        // create a hashmap
-        // iterate each word, sort the word, check if it is in hashmap, if yes, add the original word to the list, otherwise, 
-        // create a new list for the value
-        Map<String, List<String>> m = new HashMap<>();
-        for (String s: strs) {
-            int[] c = new int[26];
-            for (char cc: s.toCharArray()) {
-                c[cc - 'a']++;
-            }
-            String hash = Arrays.toString(c);
-            if (m.containsKey(hash)) {
-                m.get(hash).add(s);
+        // map <String, List<String>>
+        // iterate the whole list
+        // for each string, => sort the string 
+        // if the sorted string is in the map, then we put the original string in the list
+        // else we create a new list, and put the string in the list, and put them in the map
+        Map<String, List<String>> map = new HashMap<>();
+        for (String s : strs) {
+            char[] chars = s.toCharArray();
+            Arrays.sort(chars);
+            String sortedStr = new String(chars);
+            if (map.containsKey(sortedStr)) {
+                List<String> list = map.get(sortedStr);
+                list.add(s);
+                map.put(sortedStr, list);
             } else {
-                m.put(hash, new ArrayList<>());
-                m.get(hash).add(s);
+                List<String> list = new LinkedList<>();
+                list.add(s);
+                map.put(sortedStr, list);
             }
         }
-        List<List<String>> res = new ArrayList<>();
-        res.addAll(m.values());
+        List<List<String>> res = new LinkedList<>();
+        for (List<String> strings : map.values()) {
+            res.add(strings);
+        }
         return res;
     }
 }
