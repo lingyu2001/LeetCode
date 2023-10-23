@@ -7,13 +7,7 @@ class Solution {
             if (i > 0 && nums[i] == nums[i - 1]) continue;
             int j = i + 1;
             int k = nums.length - 1;
-            while (j < k) {
-                while (j < nums.length && j != i + 1 && nums[j] == nums[j - 1]) {
-                    j++;
-                }
-                while (k >= 0 && k + 1 < nums.length && nums[k] == nums[k + 1]) {
-                    k--;
-                }   
+            while (j < k) { 
                 if (j < k && nums[j] + nums[k] == -nums[i]) {
                     List<Integer> list = new ArrayList<>();
                     list.add(nums[i]);
@@ -22,6 +16,8 @@ class Solution {
                     res.add(new ArrayList<>(list));
                     j++;
                     k--;
+                    while (j < k && nums[j] == nums[j - 1]) j++;
+                    while (j < k && k + 1 < nums.length && nums[k] == nums[k + 1]) k--;
                 } else if (j < k && nums[j] + nums[k] > -nums[i]){
                     k--;
                 } else {
