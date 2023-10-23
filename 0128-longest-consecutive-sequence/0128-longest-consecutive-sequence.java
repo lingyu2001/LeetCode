@@ -7,12 +7,12 @@ class Solution {
         }
         for (int i : nums) {
             int cnt = 0;
-            if (!set.contains(i - 1)) {
+            if (!set.contains(i + 1)) {
                 int j = i;
                 while (set.contains(j)) {
                     cnt++;
                     set.remove(j);
-                    j++;
+                    j--;
                 }
             }
             max = Math.max(max, cnt);
