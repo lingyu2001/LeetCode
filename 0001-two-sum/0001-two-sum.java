@@ -1,13 +1,15 @@
 class Solution {
     public int[] twoSum(int[] nums, int target) {
-        Set<Integer> set = new HashSet<>();
+        // iterate each number in nums
+        // find target - num:
+        // if it exists => return index 
+        // else add this number to set. continue iterating the nums
+        Map<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
-            if (set.contains(target - nums[i])) {
-                for (int j = 0; j < i; j++) {
-                    if (nums[j] == target - nums[i]) return new int[]{j, i};
-                }
+            if (map.containsKey(target - nums[i])) {
+                return new int[]{i, map.get(target - nums[i])};
             } else {
-                set.add(nums[i]);
+                map.put(nums[i], i);
             }
         }
         return null;
