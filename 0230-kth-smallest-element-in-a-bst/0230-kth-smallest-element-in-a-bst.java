@@ -14,22 +14,21 @@
  * }
  */
 class Solution {
+    int cnt = 1;
     int res = 0;
-    int cnt = 0;
-    int kk = 0;
+    int tgt;
     public int kthSmallest(TreeNode root, int k) {
-        kk = k;
+        tgt = k;
         helper(root);
         return res;
     }
 
-    public void helper(TreeNode root) {
-        if (root == null) return ;
+    public void helper (TreeNode root) {
+        if (root == null) return;
         helper(root.left);
-        if (cnt + 1 == kk) {
+        if (cnt == tgt) {
             res = root.val;
-            
-        } 
+        }
         cnt++;
         helper(root.right);
     }
