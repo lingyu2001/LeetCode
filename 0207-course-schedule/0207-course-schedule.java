@@ -1,30 +1,35 @@
 class Solution {
-    Map<Integer, HashSet<Integer>> map = new HashMap<>();
-    int[] visited;
+    HashMap<Integer, List<Integer>> map = new HashMap<>();
+    int[] detected;
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        visited = new int[numCourses];
-        for (int[] e : prerequisites) {
-            HashSet<Integer> set = map.getOrDefault(e[0], new HashSet<>());
-            set.add(e[1]);
-            map.put(e[0], set);
-        }
         for (int i = 0; i < numCourses; i++) {
-            if (visited[i] == 0) if (!dfs(i)) return false;
+            map.put(i, new ArrayList<>());
+        }
+        // create a graph for this case
+        for (int[] pre : prerequisites) {
+            List<Integer> list = map.getOrDefault(pre[0], new ArrayList<>());
+            list.add(pre[1]);
+            map.put(pre[0], list);
+        }
+        detected = new int[numCourses];
+        // try dfs in this graph, 
+        // if there is a cycle => return false;
+        // else return true;
+        for (int i : map.keySet()) {
+            if (isCycle(i)) return false;
         }
         return true;
     }
 
-    public boolean dfs(int i) {
-        if (visited[i] == 1) return true;
-        if (visited[i] == 2) return false;
-        Set<Integer> neighbors = map.get(i);
-        visited[i] = 2;
-        if (neighbors != null) {
-            for (int n : neighbors) {
-                if(!dfs(n)) return false;
-            }
+    public boolean isCycle(int i) {
+        if (detected[i] == 2) return false;
+        if (detected[i] == 1) return true;
+        detected[i] = 1;
+        boolean res = false;
+        for (int n : map.get(i)) {
+            res = res || isCycle(n);
         }
-        visited[i] = 1;
-        return true;
+        detected[i] = 2;
+        return res;
     }
-}
+} 
