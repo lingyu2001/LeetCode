@@ -1,22 +1,22 @@
 class Solution {
     public int longestConsecutive(int[] nums) {
+        // add all elements to the hashset
         HashSet<Integer> set = new HashSet<>();
-        // add all elements in the hashtable
+        for (int n : nums) set.add(n);
+        // iterate each element in the array
+        // if it is the smallest element in the consecutive elements sequence?
+        // => yes. find the length of the sequence, compare the len to the current res variable
         int res = 0;
-        for (int i : nums) set.add(i);
-        for (int i : nums) {
-            // if i is the smallest number in the consecutive elements sequence
-            if (set.contains(i - 1)) {
-                continue;
-            }
-            int len = 1;
-            int j = i + 1;
+        // => no. continue;
+        for (int n : nums) {
+            if (set.contains(n - 1)) continue;
+            int j = n;
             while (set.contains(j)) {
-                len++;
                 j++;
             }
-            res = Math.max(len, res);
+            res = Math.max(res, j - n);
         }
+        // return res;
         return res;
     }
 }
