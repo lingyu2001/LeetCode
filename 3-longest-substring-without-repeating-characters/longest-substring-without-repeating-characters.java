@@ -1,23 +1,22 @@
 class Solution {
     public int lengthOfLongestSubstring(String s) {
-        int len = 1;
-        int le = 0, ri = 1;
-        Set<Character> set = new HashSet<>();
-        if(s.length() < 2) return s.length();
-        set.add(s.charAt(0));
-        while (ri < s.length() && le <= ri) {
+        // while right pointer is < s.length
+        // if the window has no repeating characters => compare the size of the window to the res;
+        // else => move the window => how? make the window smaller until there is no repeating char in the window
+        HashSet<Character> set = new HashSet<>();
+        int lo = 0, ri = 0;
+        int res = 0;
+        while (ri < s.length()) {
             if (set.add(s.charAt(ri))) {
-                len = Math.max(ri - le + 1, len);
-                ri++;
+                res = Math.max(res, ri - lo + 1);
             } else {
-                // remove chars so that theres no duplicate chars in the window
                 while (!set.add(s.charAt(ri))) {
-                    set.remove(s.charAt(le));
-                    le++;
+                    set.remove(s.charAt(lo));
+                    lo++;
                 }
-                ri++;
             }
+            ri++;
         }
-        return len;
+        return res;
     }
 }
