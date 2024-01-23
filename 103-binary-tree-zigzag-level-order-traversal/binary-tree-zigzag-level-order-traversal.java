@@ -24,11 +24,11 @@ class Solution {
             LinkedList<Integer> arr = new LinkedList<>();
             for (int i = 0; i < size; i++) {
                 TreeNode t = queue.poll();
-                arr.add(t.val);
+                if (round % 2 == 1) arr.addFirst(t.val);
+                else arr.addLast(t.val);
                 if (t.left != null) queue.offer(t.left);
                 if (t.right != null) queue.offer(t.right);
             }
-            if (round % 2 == 1) Collections.reverse(arr);
             round++;
             res.add(arr);
         }
