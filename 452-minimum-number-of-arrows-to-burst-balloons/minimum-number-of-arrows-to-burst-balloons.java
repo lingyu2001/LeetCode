@@ -10,18 +10,25 @@ class Solution {
         // 4. return res;
         // time complexity: nlogn
         // step 1:
-         Arrays.sort(points, (a, b) -> Integer.compare(a[1], b[1]));
-        
-        int arrows = 1;
-        int end = points[0][1];
+        Arrays.sort(points, (a,b) -> Integer.compare(a[0], b[0]));
+        // step 2
+        int starti = points[0][0];
+        int endi = points[0][1];
+        // step 3
         for (int i = 1; i < points.length; i++) {
-            // If the current balloon's start position is greater than the last end, need another arrow
-            if (points[i][0] > end) {
-                arrows++;
-                end = points[i][1];
+            // 3.1 
+            if (points[i][0] < endi) {
+                starti = Math.max(points[i][0], starti);
+                endi = Math.min(points[i][1], endi);
+                // 3.2
+            } else if (points[i][0] == endi) {
+                continue;
+            } else {
+                res++;
+                starti = points[i][0];
+                endi = points[i][1];
             }
         }
-        
-        return arrows;
+        return res;
     }
 }
