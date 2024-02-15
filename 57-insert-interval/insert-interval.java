@@ -1,38 +1,35 @@
 class Solution {
     public int[][] insert(int[][] intervals, int[] newInterval) {
-        List<int[]> res = new ArrayList<>();
-        // flag : to determine whether i need to check or just add the rest of the 
-        // intervals to the list
-        boolean flag = false;
-        for (int[] in : intervals) {
-            int starti = in[0];
-            int endi = in[1];
-            if (flag) {
-                res.add(in);
-                continue;
-            }
-            // situation 1: non overlapping 1
-            if (newInterval[1] < starti) {
-                res.add(newInterval);
-                res.add(in);
-                flag = true;
-            } else if (endi < newInterval[0]) {
-                // situation 2
-                res.add(in);
+        LinkedList<int[]> list = new LinkedList<>();
+        int[][] newIns = new int[intervals.length + 1][2];
+        for (int i = 0; i < newIns.length - 1; i++) {
+            newIns[i] = intervals[i];
+        }
+        newIns[newIns.length - 1] = newInterval;
+        return merge(newIns);
+    }
+
+    public int[][] merge(int[][] intervals) {
+        Arrays.sort(intervals, (a,b) -> Integer.compare(a[0], b[0]));
+        LinkedList<int[]> list = new LinkedList<>();
+        list.add(intervals[0]);
+        for (int i = 1 ; i < intervals.length; i++) {
+            int start = list.getLast()[0];
+            int end = list.getLast()[1];
+            if (end < intervals[i][0]) {
+                list.add(intervals[i]);
             } else {
-                // overlapping
-                newInterval[0] = Math.min(in[0], newInterval[0]);
-                newInterval[1] = Math.max(in[1], newInterval[1]);
+                // list.getLast()[0] = Math.min(start, intervals[i][0]);
+                list.getLast()[1] = Math.max(end, intervals[i][1]);
             }
         }
-        if (!flag) res.add(newInterval);
-        // return the result
-        int[][] ret = new int[res.size()][2];
+        int[][] res = new int[list.size()][2];
         int idx = 0;
-        for (int[] in : res){
-            ret[idx][0] = in[0];
-            ret[idx++][1] = in[1];
+        for (int[] in : list) {
+            res[idx][0] = in[0];
+            res[idx][1] = in[1];
+            idx++;
         }
-        return ret;
+        return res;
     }
 }
