@@ -12,15 +12,13 @@ class Solution {
             res.add(sb.toString());
             return ;
         }
-        if (l < n) {
             sb.append("(");
             helper(n, l + 1, r);
             sb.deleteCharAt(sb.length() - 1);
-        }
-        if (r < n) {
+
             sb.append(")");
             helper(n, l, r + 1);
             sb.deleteCharAt(sb.length() - 1);
-        }
+        
     }
 }
