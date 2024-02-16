@@ -23,9 +23,6 @@ class Solution {
             }
             stack.push(new Pair<>(temp[i], i));
         }
-        while(!stack.isEmpty()) {
-            res[stack.pop().getValue()] = 0;
-        }
         return res;
     }
 }
