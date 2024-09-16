@@ -1,17 +1,19 @@
 class Solution {
     public int maxArea(int[] height) {
-        // As the pointers move towards each other, every possible width is checked with the tallest possible lines for that width. 
-        // This ensures that the maximum area configuration is not missed.
-        int lo = 0, hi = height.length - 1;
-        int res = 0;
-        while (lo < hi) {
-            res = Math.max(res, (hi - lo) * Math.min(height[lo], height[hi]));
-            if (height[lo] < height[hi]) {
-                lo++;
+        int n = height.length;
+        int l = 0, r = n - 1;
+        int max = 0;
+        while (l < r) {
+            int curr = (r - l) * Math.min(height[l], height[r]);
+            if (curr > max) {
+                max = curr;
+            }
+            if (height[l] < height[r]) {
+                l++;
             } else {
-                hi--;
+                r--;
             }
         }
-        return res;
+        return max;
     }
 }
