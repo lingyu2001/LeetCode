@@ -1,14 +1,13 @@
 class Solution {
     public String minRemoveToMakeValid(String s) {
-        char[] sb = new char[s.length()];
-        sb = s.toCharArray();
+        StringBuilder sb = new StringBuilder(s);
         Stack<Integer> stack = new Stack<>();
         for (int i = 0; i < s.length(); i++) {
             if (s.charAt(i) == '(') {
                 stack.add(i);
             } else if (s.charAt(i) == ')') {
                 if (stack.isEmpty()) {
-                    sb[i] = ' ';
+                    sb.setCharAt(i, ' ');
                 } else {
                     stack.pop();
                 }
@@ -16,15 +15,8 @@ class Solution {
         }
         while (!stack.isEmpty()) {
             int idx = stack.pop();
-            sb[idx] = ' ';
+            sb.setCharAt(idx, ' ');
         }
-        StringBuilder res = new StringBuilder();
-        int p = 0;
-        while (p < sb.length) {
-            if (sb[p] == ' ') {p++; continue;}
-            res.append(sb[p]);
-            p++;
-        }
-        return res.toString();
+        return sb.toString().replaceAll("\\ ", "");
     }
 }
