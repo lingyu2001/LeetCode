@@ -1,12 +1,12 @@
 class Solution:
     def customSortString(self, order: str, s: str) -> str:
-        l = list(s)
+        lst = list(s)
+        lst.sort()
         res = ""
         for c in order:
-            while c in l:
+            while c in lst:
                 res += c
-                l.remove(c)
-        for c in l:
-            res += c
+                lst.remove(c)
+        while len(lst) != 0:
+            res += lst.pop()
         return res
-        
