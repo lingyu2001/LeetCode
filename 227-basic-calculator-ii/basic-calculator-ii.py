@@ -1,25 +1,25 @@
 class Solution:
     def calculate(self, s: str) -> int:
-        sign = "+"
         s += '+'
-        sign = "+"
+        sign = '+'
         res = 0
         num = 0
-        stack = []
+        last_num = 0
         for c in s:
             if c.isnumeric():
                 num = num * 10 + int(c)
             elif c != ' ':
                 if sign == '*':
-                    stack.append(stack.pop() * num)
+                    last_num = num * last_num
                 elif sign == '/':
-                    stack.append(math.trunc(stack.pop() / num))
+                    last_num = math.trunc(last_num/num)
                 elif sign == '+':
-                    stack.append(num)
+                    res += last_num
+                    last_num = num
                 elif sign == '-':
-                    stack.append(-num)
+                    res += last_num
+                    last_num = -num
                 num = 0
                 sign = c
-        for n in stack:
-            res += n
+        res += last_num
         return res
