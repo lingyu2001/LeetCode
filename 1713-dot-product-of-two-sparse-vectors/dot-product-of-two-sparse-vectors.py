@@ -3,25 +3,26 @@ class SparseVector:
         """
         :type nums: List[int]
         """
-        self.non_zero_pos = {}
+        self.non_zeros = []
         for idx, n in enumerate(nums):
-            if n != 0: 
-                self.non_zero_pos[idx] = n
-        
+            if n != 0:
+                self.non_zeros.append([idx, n])
 
-    # Return the dotProduct of two sparse vectors
     def dotProduct(self, vec):
         """
         :type vec: 'SparseVector'
         :rtype: int
         """
         res = 0
-        for idx, n in self.non_zero_pos.items():
-            if idx in vec.non_zero_pos:
-                res += n * vec.non_zero_pos[idx]
+        p = 0
+        q = 0
+        while p < len(self.non_zeros) and q < len(vec.non_zeros):
+            if self.non_zeros[p][0] == vec.non_zeros[q][0]:
+                res += self.non_zeros[p][1] * vec.non_zeros[q][1]
+                p += 1
+                q += 1
+            elif self.non_zeros[p][0] < vec.non_zeros[q][0]:
+                p += 1
+            else:
+                q += 1
         return res
-
-# Your SparseVector object will be instantiated and called as such:
-# v1 = SparseVector(nums1)
-# v2 = SparseVector(nums2)
-# ans = v1.dotProduct(v2)
