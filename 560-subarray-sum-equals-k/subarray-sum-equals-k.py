@@ -1,22 +1,12 @@
-class Solution(object):
-    def subarraySum(self, nums, k):
-        """
-        :type nums: List[int]
-        :type k: int
-        :rtype: int
-        """
+class Solution:
+    def subarraySum(self, nums: List[int], k: int) -> int:
+        preSum = defaultdict(int)
+        sum = 0
         res = 0
-        n = len(nums)
-        preSum = [0] * (n + 1)
-        count = {0:1}
-        for i in range(1, n + 1):
-            preSum[i] = preSum[i - 1] + nums[i - 1]
-            lookfor = preSum[i] - k
-            if lookfor in count:
-                res += count[lookfor]
-            if preSum[i] in count:
-                count[preSum[i]] += 1
-            else:
-                count[preSum[i]] = 1
+        preSum[0] = 1 
+        for n in nums:
+            sum += n
+            if sum - k in preSum:
+                res += preSum[sum - k]
+            preSum[sum] += 1
         return res
-        
