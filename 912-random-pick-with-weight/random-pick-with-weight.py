@@ -1,7 +1,8 @@
+import random
 class Solution:
     def __init__(self, w: List[int]):
-        # calculate preSum array
         self.preSum = [0]
+        # calculate preSum array
         for c in w:
             self.preSum.append(self.preSum[-1] + c)
     def pickIndex(self) -> int:
