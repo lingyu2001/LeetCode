@@ -1,6 +1,5 @@
 class Solution:
     def calculate(self, s: str) -> int:
-        s = [c for c in s if c != ' ']
         sign = "+"
         s += '+'
         sign = "+"
@@ -10,7 +9,7 @@ class Solution:
         for c in s:
             if c.isnumeric():
                 num = num * 10 + int(c)
-            else:
+            elif c != ' ':
                 if sign == '*':
                     stack.append(stack.pop() * num)
                 elif sign == '/':
