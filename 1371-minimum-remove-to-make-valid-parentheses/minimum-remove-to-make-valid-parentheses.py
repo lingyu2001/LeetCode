@@ -7,26 +7,20 @@ class Solution:
         '''
         lst = list(s)
         balance = 0
-        matched = 0
-        first_pass = []
-        second_pass = []
-        # remove all unmatched )
-        for c in lst:
+        for idx, c in enumerate(lst):
             if c == '(':
                 balance += 1
             elif c == ')':
-                if balance == 0:
-                    continue
-                else:
+                if balance > 0:
                     balance -= 1
-                    matched += 1
-            first_pass.append(c)
-        # remove all unmatched (
-        for c in first_pass:
-            if c == '(':
-                if matched == 0:
-                    continue
                 else:
-                    matched -= 1
-            second_pass.append(c)
-        return "".join(second_pass)
+                    lst[idx] = ' '
+        i = len(lst) - 1
+        i = len(lst) - 1
+        while i >= 0 and balance > 0:
+            if lst[i] == '(':
+                lst[i] = ' '
+                balance -= 1
+            i -= 1
+        lst = [c for c in lst if c != ' ']
+        return "".join(lst)
