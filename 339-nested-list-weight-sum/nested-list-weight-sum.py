@@ -42,15 +42,19 @@
 #        """
 
 class Solution:
-    depth = 0
     sum = 0
     def depthSum(self, nestedList: List[NestedInteger]) -> int:
-        self.depth += 1
-        for elem in nestedList:
-            if elem.isInteger():
-                # print(elem.getInteger(), self.depth)
-                self.sum += elem.getInteger() * self.depth
-            else:
-                self.depthSum(elem.getList())
-        self.depth -= 1
+        self.helper(nestedList, 1)
         return self.sum
+    
+    def helper(self, nestedList, depth):
+        for elem in nestedList:
+            # elem is integer:
+            if elem.isInteger():
+                self.sum += elem.getInteger() * depth
+            else:
+                # elem is a list
+                self.helper(elem.getList(), depth + 1)
+
+# time complexity o(n)
+# space complexity o(d) d is the depth
