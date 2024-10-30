@@ -23,17 +23,17 @@ class Solution(object):
                 p1 += 1
             if encoded2[p2][1] == 0:
                 p2 += 1
-        while p1 < m:
-            if res and res[-1][0] == encoded1[p1][0]:
-                res[-1][1] += encoded1[p1][1]
-            else:
-                res.append(encoded1[p1])
-            p1 += 1
-        while p2 < n:
-            if res and res[-1][0] == encoded2[p2][0]:
-                res[-1][1] += encoded2[p2][1]
-            else:
-                res.append(encoded2[p2])
-            p2 += 1
+        # while p1 < m:
+        #     if res and res[-1][0] == encoded1[p1][0]:
+        #         res[-1][1] += encoded1[p1][1]
+        #     else:
+        #         res.append(encoded1[p1])
+        #     p1 += 1
+        # while p2 < n:
+        #     if res and res[-1][0] == encoded2[p2][0]:
+        #         res[-1][1] += encoded2[p2][1]
+        #     else:
+        #         res.append(encoded2[p2])
+        #     p2 += 1
         return res
         
