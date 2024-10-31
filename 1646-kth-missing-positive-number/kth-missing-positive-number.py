@@ -5,10 +5,19 @@ class Solution(object):
         :type k: int
         :rtype: int
         """
-        for i in range(1, arr[-1] + k + 1):
-            if i not in arr:
-                k -= 1
-                if k == 0:
-                    return i
-            
-        
+        missing = [0] * len(arr)
+        # num of positive integers missing before arr[i]
+        for i in range(len(arr)):
+            missing[i] = arr[i] - (i + 1)
+        # find the range of the kth pos integer
+        lo = 0 
+        hi = len(missing)
+        while lo < hi:
+            mid = lo + (hi - lo) // 2
+            if missing[mid] >= k:
+                hi = mid
+            else:
+                lo = mid + 1
+        # lo = hi
+        return lo + k
+         
