@@ -6,18 +6,18 @@ class Solution(object):
         :rtype: int
         """
         missing = [0] * len(arr)
-        # num of positive integers missing before arr[i]
-        for i in range(len(arr)):
-            missing[i] = arr[i] - (i + 1)
-        # find the range of the kth pos integer
-        lo = 0 
-        hi = len(missing)
+        for i in range(1, len(arr) + 1):
+            missing[i - 1] = arr[i - 1] - i
+        # print(missing)
+        # find the position of k
+        lo = 0
+        hi = len(arr)
         while lo < hi:
             mid = lo + (hi - lo) // 2
-            if missing[mid] >= k:
-                hi = mid
-            else:
+            # leftmost
+            if missing[mid] < k:
                 lo = mid + 1
-        # lo = hi
-        return lo + k
-         
+            else:
+                hi = mid
+        return  lo + k
+        
