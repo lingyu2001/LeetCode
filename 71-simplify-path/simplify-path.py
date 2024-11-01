@@ -15,5 +15,5 @@ class Solution(object):
                     res = res[:-1]
             else:
                 res.append(content)
-        final_str = "/" + "/".join(res)
+        final_str ="/" + "/".join(res)
         return final_str
