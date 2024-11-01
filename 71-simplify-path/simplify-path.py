@@ -15,5 +15,5 @@ class Solution(object):
                     res = res[:-1]
             else:
                 res.append(content)
-        res_str = ['/' + c for c in res]
-        return "".join(res_str) if len(res_str) > 0 else "/"
+        final_str = "/" + "/".join(res)
+        return final_str
