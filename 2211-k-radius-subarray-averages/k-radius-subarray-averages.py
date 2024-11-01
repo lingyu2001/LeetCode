@@ -5,29 +5,22 @@ class Solution(object):
         :type k: int
         :rtype: List[int]
         """
-        # define a presum
-        # define a res arr = [-1] * len()
-        # start from k to len() - k
         n = len(nums)
-        total = 0
+        res = [-1] * n
+        if n < 2 * k + 1:
+            return res
+        window_sum = 0
         lo = 0
         hi = 2 * k
-        res = [-1] * n
-        for i in range(lo, hi + 1):
-            if i < n:
-                total += nums[i]
-            else:
-                return res
-        for i in range(k, n - k):
-            # get total sum within the range
-            # i, [i-k,i+k], # of elems: 2k+1 
-            avg = total // (2 * k + 1)
-            res[i] = avg
-            if hi + 1 < n:
-                total -= nums[lo]
-                lo += 1
-                hi += 1
-                total += nums[hi]
-        return res
+        for i in range(lo, hi):
+            window_sum += nums[i]
+        while hi < n:
+            window_sum += nums[hi]
+            i = lo + (hi - lo) // 2
+            res[i] = window_sum // (2 * k + 1)
+            window_sum -= nums[lo]
+            lo += 1
+            hi += 1
 
+        return res
         
