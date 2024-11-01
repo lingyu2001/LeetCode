@@ -10,14 +10,13 @@ class Solution(object):
         m = len(word1)
         n = len(word2)
         res = ""
-        while p1 < m and p2 < n:
+        while p1 < min(m, n):
             res += word1[p1]
+            res += word2[p1]
             p1 += 1
-            res += word2[p2]
-            p2 += 1
         if p1 < m:
             res += word1[p1:]
-        if p2 < n:
-            res += word2[p2:]
+        if p1 < n:
+            res += word2[p1:]
         return res
         
