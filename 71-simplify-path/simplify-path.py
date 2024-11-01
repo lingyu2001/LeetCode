@@ -11,7 +11,7 @@ class Solution(object):
             if content == '.':
                 continue
             elif content == '..':
-                if len(res) >= 1:
+                if res:
                     res = res[:-1]
             else:
                 res.append(content)
