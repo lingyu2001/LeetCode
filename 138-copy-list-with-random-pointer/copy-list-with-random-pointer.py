@@ -17,14 +17,10 @@ class Solution:
             p = p.next
         # connect next
         p = head
-        while p and p.next:
-            copy = node_map[p]
-            copy.next = node_map[p.next]
-            p = p.next
-        # connect random
-        p = head
         while p:
             copy = node_map[p]
+            if p.next:
+                copy.next = node_map[p.next]
             if p.random:
                 copy.random = node_map[p.random]
             p = p.next
