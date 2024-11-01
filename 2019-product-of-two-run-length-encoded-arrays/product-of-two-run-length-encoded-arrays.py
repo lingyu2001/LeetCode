@@ -5,23 +5,32 @@ class Solution(object):
         :type encoded2: List[List[int]]
         :rtype: List[List[int]]
         """
-        res = []
         p1 = 0
         p2 = 0
-        m = len(encoded1)
-        n = len(encoded2)
-        while p1 < m and p2 < n:
-            num_add = min(encoded1[p1][1], encoded2[p2][1])
-            prod = encoded1[p1][0] * encoded2[p2][0]
-            if res and res[-1][0] == prod:
-                res[-1][1] += num_add
-            else:
-                res.append([prod, num_add])
-            encoded1[p1][1] -= num_add
-            encoded2[p2][1] -= num_add
-            if encoded1[p1][1] == 0:
+        res = []
+        while p1 < len(encoded1) and p2 < len(encoded2):
+            cnt1 = encoded1[p1][1]
+            cnt2 = encoded2[p2][1]
+            if cnt1 == cnt2:
+                if res and encoded1[p1][0] * encoded2[p2][0] == res[-1][0]:
+                    res[-1][1] += cnt1
+                else:
+                    res.append([encoded1[p1][0] * encoded2[p2][0], cnt1])
                 p1 += 1
-            if encoded2[p2][1] == 0:
                 p2 += 1
+            elif cnt1 < cnt2:
+                if res and encoded1[p1][0] * encoded2[p2][0] == res[-1][0]:
+                    res[-1][1] += cnt1
+                else:
+                    res.append([encoded1[p1][0] * encoded2[p2][0], cnt1])
+                p1 += 1
+                encoded2[p2][1] = cnt2 - cnt1
+            else:
+                if res and encoded1[p1][0] * encoded2[p2][0] == res[-1][0]:
+                    res[-1][1] += cnt2
+                else:
+                    res.append([encoded1[p1][0] * encoded2[p2][0], cnt2])
+                p2 += 1
+                encoded1[p1][1] = cnt1 - cnt2
         return res
         
