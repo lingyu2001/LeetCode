@@ -1,16 +1,21 @@
-class Solution:
-    def maximumSwap(self, num: int) -> int:
-       num_str = list(str(num))
-       n = len(num_str)
-       max_right_index = [0] * n
-       max_right_index[n - 1] = n - 1
-       for i in range(n - 2, -1, - 1):
-            if num_str[i] > num_str[max_right_index[i + 1]]:
-                max_right_index[i] = i
-            else:
-                max_right_index[i] = max_right_index[i + 1]
-       for i in range(n):
-            if num_str[i] != num_str[max_right_index[i]]:
-                num_str[i], num_str[max_right_index[i]] = num_str[max_right_index[i]], num_str[i]
-                return int("".join(num_str))
-       return int("".join(num_str))
+class Solution(object):
+    def maximumSwap(self, num):
+        """
+        :type num: int
+        :rtype: int
+        """
+        nums = list(str(num))
+        n = len(nums)
+        max_index = n - 1
+        left = -1 
+        right = -1
+        for i in range(n - 2, -1, -1):
+            if nums[i] > nums[max_index]:
+                max_index = i
+            elif nums[i] < nums[max_index]:
+                left,right = i, max_index
+        if left != -1:
+            nums[left], nums[right] = nums[right], nums[left]
+            return int("".join(nums))
+        return num
+            
