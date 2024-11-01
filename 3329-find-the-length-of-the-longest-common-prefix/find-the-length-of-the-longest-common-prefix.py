@@ -14,17 +14,21 @@ class Trie():
                 p.children[int(c)] = TrieNode()
             p = p.children[int(c)]
 
-    def find(self, target):
-        target_str = str(target)
-        p = self.root
-        idx = 0
-        while p and idx < len(target_str):
-            if p.children[int(target_str[idx])]:
-                p = p.children[int(target_str[idx])]
-                idx += 1
+    def find(self, num):
+        node = self.root
+        num_str = str(num)
+        len = 0
+
+        for digit in num_str:
+            idx = int(digit)
+            if node.children[idx]:
+                # Increase length if the current digit matches
+                len += 1
+                node = node.children[idx]
             else:
+                # Stop if no match for the current digit
                 break
-        return idx
+        return len
 
 
 class Solution(object):
