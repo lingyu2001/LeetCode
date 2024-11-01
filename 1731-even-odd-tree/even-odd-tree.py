@@ -5,14 +5,6 @@
 #         self.left = left
 #         self.right = right
 class Solution(object):
-    def verify(self, level, node, val):
-        if (level % 2 == 0 and node.val % 2 ==1) or (level % 2 == 1 and node.val % 2 == 0):
-            if level % 2 == 0:
-                return node.val > val
-            else:
-                return node.val < val
-        else:
-            return False
     def isEvenOddTree(self, root):
         """
         :type root: Optional[TreeNode]
@@ -20,22 +12,29 @@ class Solution(object):
         """
         queue = deque()
         if root:
-            queue.append(root)
-        level = -1
+            queue.append([root, 0])
         while queue:
-            level += 1
             size = len(queue)
-            val = float('-inf') if level % 2 == 0 else float('inf')
-            for _ in range(size):
-                node = queue.popleft()
-                if self.verify(level, node, val):
-                    val = node.val
-                    if node.left :
-                        queue.append(node.left)
-                    if node.right:
-                        queue.append(node.right)
-                else:
+            compare = float('inf') if queue[0][1] % 2 == 1 else float('-inf')
+            for i in range(size):
+                node, level = queue.popleft()
+                if level % 2 == node.val % 2:
                     return False
+                if level % 2 == 1:
+                    if node.val >= compare:
+                        return False
+                    else:
+                        compare = node.val
+                else:
+                    if node.val <= compare:
+                        return False
+                    else:
+                        compare = node.val
+                if node.left:
+                    queue.append([node.left, level + 1])
+                if node.right:
+                    queue.append([node.right, level + 1])
         return True
 
-
+                  
+        
