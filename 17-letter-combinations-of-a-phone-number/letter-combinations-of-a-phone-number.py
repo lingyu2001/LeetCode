@@ -1,21 +1,23 @@
-class Solution:
-    def letterCombinations(self, digits: str) -> List[str]:
-        map = {
-            1:"",2:"abc",3:"def",4:"ghi",
-            5:"jkl",6:"mno",7:"pqrs",8:"tuv",9:"wxyz"
-        }
-        dlist = list(digits)
+class Solution(object):
+    def letterCombinations(self, digits):
+        """
+        :type digits: str
+        :rtype: List[str]
+        """
+        num_to_chars = {'2':"abc", '3':"def",'4':"ghi", '5':"jkl",'6':"mno",'7':"pqrs", '8':"tuv", '9':"wxyz"}
         res = []
+        if len(digits) == 0:
+            return res
         path = ""
-        self.helper(map, dlist, 0, res, path)
+        self.helper(digits, 0, path, res, num_to_chars)
         return res
-    def helper(self, map, dlist, start, res, path):
-        if start >= len(dlist):
-            if path != "":
-                res.append(path)
-            return;
-        options = map[int(dlist[start])]
-        for c in options:
+    
+    def helper(self, digits, idx, path, res, num_to_chars):
+        if idx >= len(digits):
+            res.append(path)
+            return
+        for c in num_to_chars[digits[idx]]:
             path += c
-            self.helper(map, dlist, start + 1, res, path)
-            path = path[:len(path) - 1]
+            self.helper(digits, idx + 1, path, res, num_to_chars)
+            path = path[:-1]
+        
