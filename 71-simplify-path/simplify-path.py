@@ -4,9 +4,6 @@ class Solution(object):
         :type path: str
         :rtype: str
         """
-        # replace // ///
-        path = path.replace("//","/")
-        path = path.replace("///", "/")
         paths = path.split("/")
         paths = [p for p in paths if p]
         res = []
