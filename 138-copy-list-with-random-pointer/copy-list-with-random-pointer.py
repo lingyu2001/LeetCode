@@ -8,21 +8,17 @@ class Node:
 """
 
 class Solution:
+    def __init__(self):
+        self.seen = {}
     def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
-        node_map = defaultdict(Node)
-        p = head
-        # copy nodes
-        while p:
-            node_map[p] = Node(p.val)
-            p = p.next
-        # connect next
-        p = head
-        while p:
-            copy = node_map[p]
-            if p.next:
-                copy.next = node_map[p.next]
-            if p.random:
-                copy.random = node_map[p.random]
-            p = p.next
-        return node_map[head] if head else None
+        if not head:
+            return None
+        if head in self.seen:
+            return self.seen[head]
+        node = Node(head.val)
+        self.seen[head] = node
+        node.next = self.copyRandomList(head.next)
+        node.random = self.copyRandomList(head.random)
+        return node
+
         
