@@ -5,21 +5,22 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    sum = 0
-    path = 0
     def sumNumbers(self, root: Optional[TreeNode]) -> int:
-        self.helper(root)
-        return self.sum
-    def helper(self, root):
-        if root == None:
-            return
-        self.path = self.path * 10 + root.val
-        if root.left == None and root.right == None:
-            self.sum += self.path
-            self.path = self.path // 10 
-            return
-        self.helper(root.left)
-        self.helper(root.right)
-        self.path = self.path // 10 
-        return 
-        
+        path = 0
+        nums = []
+        self.dfs(root, path, nums)
+        return sum(nums)
+
+    def dfs(self, root, path, res):
+        if not root:
+            return 
+        # leaf
+        path = path * 10 + root.val
+        if not root.left and not root.right:
+            res.append(path)
+        # not leaf
+        if root.left:
+            self.dfs(root.left, path, res)
+        if root.right:
+            self.dfs(root.right, path, res)
+        path = path // 10
