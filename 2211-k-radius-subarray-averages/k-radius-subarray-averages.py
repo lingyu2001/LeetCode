@@ -11,16 +11,14 @@ class Solution(object):
             return res
         window_sum = 0
         lo = 0
-        hi = 2 * k
+        hi = 2 * k + 1
         for i in range(lo, hi):
             window_sum += nums[i]
+        res[k] = window_sum // (2 * k + 1)
         while hi < n:
-            window_sum += nums[hi]
-            i = lo + (hi - lo) // 2
-            res[i] = window_sum // (2 * k + 1)
-            window_sum -= nums[lo]
+            window_sum = window_sum + nums[hi] - nums[lo]
+            res[hi - k] = window_sum // (2 * k + 1)
             lo += 1
             hi += 1
-
         return res
         
