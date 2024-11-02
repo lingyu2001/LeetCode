@@ -2,6 +2,7 @@ class Solution(object):
     def get_hash(self, s):
         key = []
         for a, b in zip(s, s[1:]):
+            # key point
             key.append( str((ord(b) - ord(a)) % 26) + ',' )
         return "".join(key)
     def groupStrings(self, strings):
