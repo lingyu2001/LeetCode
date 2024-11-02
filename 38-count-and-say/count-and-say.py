@@ -2,15 +2,15 @@ class Solution:
     def countAndSay(self, n: int) -> str:
         cur_str = "1"
         for _ in range(n - 1):
-            next_str = ""
+            i = 0
             j = 0
-            k = 0
-            while j < len(cur_str):
-                while (k < len(cur_str) and cur_str[k] == cur_str[j]):
-                    k += 1
-                next_str += str(k - j) + cur_str[j]
-                j = k
-            cur_str = next_str
+            next_str = ""
+            while i < len(cur_str):
+                j = i
+                # cur_str[j] == cur_str[i]
+                while j < len(cur_str) and cur_str[j] == cur_str[i]:
+                    j += 1
+                next_str += str(j - i) + cur_str[i]
+                i = j
+            cur_str = next_str 
         return cur_str
-
-        
