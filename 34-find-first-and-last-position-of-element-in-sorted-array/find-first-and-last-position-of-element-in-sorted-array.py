@@ -1,34 +1,38 @@
-class Solution:
-    def searchRange(self, nums: List[int], target: int) -> List[int]:
-        if len(nums) == 0: 
+class Solution(object):
+    def searchRange(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        if not nums:
             return [-1, -1]
-        i = self.binsearch_left(nums, target)
-        j = self.binsearch_right(nums, target)
-        print(i, j)
-        if i >= len(nums) or nums[i] != target or nums[j-1] != target:
-            return [-1,-1]
-        else:
-            return [i, j-1]
-
-    def binsearch_left(self, nums, target):
+        left = self.bisec_left(nums, target)
+        if left >= len(nums) or nums[left] != target:
+            return [-1, -1]
+        right = self.bisec_right(nums, target)
+        if nums[right - 1] != target:
+            return [-1, -1]
+        return [left, right - 1]
+        
+    def bisec_left(self, num, target):
         lo = 0
-        hi = len(nums)
+        hi = len(num)
         while lo < hi:
             mid = lo + (hi - lo) // 2
-            if nums[mid] < target:
-                lo = mid + 1
-            else:
+            if num[mid] >= target:
                 hi = mid
+            else:
+                lo = mid + 1
         return lo
     
-    def binsearch_right(self, nums, target):
+    def bisec_right(self, num, target):
         lo = 0
-        hi = len(nums)
+        hi = len(num)
         while lo < hi:
             mid = lo + (hi - lo) // 2
-            if nums[mid] <= target:
-                lo = mid + 1
-            else:
+            if num[mid] > target:
                 hi = mid
+            else:
+                lo = mid + 1
         return lo
-    
