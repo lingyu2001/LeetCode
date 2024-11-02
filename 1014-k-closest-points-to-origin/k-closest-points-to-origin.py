@@ -19,25 +19,22 @@ class Solution:
     def partition(self, points: List[List[int]], left: int, right: int) -> int:
         """Partition the list around the pivot value"""
         pivot = self.choose_pivot(points, left, right)
-        pivot_dist = self.squared_distance(pivot)
+        pivot_dis = self.squared_distance(points[pivot])
         while left < right:
-            # Iterate through the range and swap elements to make sure
-            # that all points closer than the pivot are to the left
-            if self.squared_distance(points[left]) >= pivot_dist:
+            if self.squared_distance(points[left]) >= pivot_dis:
                 points[left], points[right] = points[right], points[left]
                 right -= 1
             else:
                 left += 1
-        
-        # Ensure the left pointer is just past the end of
-        # the left range then return it as the new pivotIndex
-        if self.squared_distance(points[left]) < pivot_dist:
+        if self.squared_distance(points[left]) < pivot_dis:
             left += 1
         return left
+        
+
     
     def choose_pivot(self, points: List[List[int]], left: int, right: int) -> List[int]:
         """Choose a pivot element of the list"""
-        return points[left + (right - left) // 2]
+        return left + (right - left) // 2
     
     def squared_distance(self, point: List[int]) -> int:
         """Calculate and return the squared Euclidean distance."""
