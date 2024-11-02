@@ -25,5 +25,6 @@ class Solution(object):
         mid = node == p or node == q
         if mid + left + right >= 2:
             self.ans = node
+            return True
         return mid or left or right
         
