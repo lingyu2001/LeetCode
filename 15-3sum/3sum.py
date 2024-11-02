@@ -4,30 +4,42 @@ class Solution(object):
         :type nums: List[int]
         :rtype: List[List[int]]
         """
-        res = set()  # Use a set to avoid duplicate triplets
-        nums = sorted(nums)
+        nums.sort()
+        return self.nsum(nums, 3, 0, 0)
         
-        for i in range(len(nums) - 2):
-            if i > 0 and nums[i] == nums[i - 1]:
-                continue
-            
-            target = -nums[i]
-            j = i + 1
-            k = len(nums) - 1
-            
-            while j < k:
-                current_sum = nums[j] + nums[k]
-                if current_sum == target:
-                    res.add((nums[i], nums[j], nums[k]))  # Add the triplet as a tuple to the set
-                    while j < k and nums[j] == nums[j + 1]:
-                        j += 1
-                    while j < k and nums[k] == nums[k - 1]:
-                        k -= 1
-                    j += 1
-                    k -= 1
-                elif current_sum > target:
-                    k -= 1
+    def nsum(self, nums, n, start, target):
+        sz = len(nums)
+        res = []
+        if n < 2 or sz < n:
+            return []
+        if n == 2:
+            lo = start
+            hi = sz - 1
+            while lo < hi:
+                if nums[lo] + nums[hi] == target:
+                    res.append([nums[lo], nums[hi]])
+                    lo += 1
+                    while lo < sz and nums[lo] == nums[lo - 1]:
+                        lo += 1
+                    hi -= 1
+                    while hi > lo and nums[hi] == nums[hi + 1]:
+                        hi -= 1
+                elif nums[lo] + nums[hi] < target:
+                    lo += 1
+                    while lo < sz and nums[lo] == nums[lo - 1]:
+                        lo += 1
                 else:
-                    j += 1
-        
-        return [list(triplet) for triplet in res] 
+                    hi -= 1
+                    while hi > lo and nums[hi] == nums[hi + 1]:
+                        hi -= 1
+            return res
+        else:
+            for i in range(start, sz):
+                if i > start and nums[i] == nums[i - 1]:
+                    continue
+                sub_res = self.nsum(nums, n - 1, i + 1, target - nums[i])
+                for arr in sub_res:
+                    arr.append(nums[i])
+                    res.append(arr)
+            return res
+            
