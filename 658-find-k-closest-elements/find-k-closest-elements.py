@@ -7,7 +7,7 @@ class Solution:
             if left == -1:
                 right += 1
                 continue
-            if right == len(arr) or abs(arr[left] - x) <= abs(arr[right] - x):
+            if right == len(arr) or x - arr[left] <= arr[right] - x:
                 left -= 1
             else:
                 right += 1
