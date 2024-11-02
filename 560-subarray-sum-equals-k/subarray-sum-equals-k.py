@@ -1,12 +1,12 @@
 class Solution:
     def subarraySum(self, nums: List[int], k: int) -> int:
-        preSum = defaultdict(int)
-        sum = 0
         res = 0
-        preSum[0] = 1 
-        for n in nums:
-            sum += n
-            if sum - k in preSum:
-                res += preSum[sum - k]
-            preSum[sum] += 1
+        total = 0
+        cnt = defaultdict(int)
+        cnt[0] = 1
+        for i in nums:
+            total += i
+            if total - k in cnt:
+                res += cnt[total - k]
+            cnt[total] += 1
         return res
