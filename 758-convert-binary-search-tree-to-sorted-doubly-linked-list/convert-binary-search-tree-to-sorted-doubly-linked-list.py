@@ -15,13 +15,14 @@ class Solution(object):
         """
         if not root:
             return None
-        self.first, self.last = None, None
+        self.first = None
+        self.last = None
         self.helper(root)
         self.first.left = self.last
         self.last.right = self.first
         return self.first
-
-    def helper(self,  root):
+    
+    def helper(self, root):
         if root:
             self.helper(root.left)
             if self.last:
@@ -31,3 +32,6 @@ class Solution(object):
                 self.first = root
             self.last = root
             self.helper(root.right)
+        
+        
+        
