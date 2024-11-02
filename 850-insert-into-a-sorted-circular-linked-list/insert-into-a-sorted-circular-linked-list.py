@@ -13,25 +13,23 @@ class Solution(object):
         :type insertVal: int
         :rtype: Node
         """
-        p = head
-        if not p:
-            head = Node(insertVal, None)
+        if not head:
+            head = Node(insertVal)
             head.next = head
             return head
-        next = p.next
-        prev, cur = head, head.next
+        prev = head
+        cur = head.next
+        # prev <= insertVal <= cur
+        # prev < insertVal insertVal > cur
+        # prev > insertVal insertVal < cur
         while True:
             if prev.val <= insertVal <= cur.val:
                 break
-            elif prev.val > cur.val:
-                if insertVal >= prev.val or insertVal <= cur.val:
+            if prev.val > cur.val:
+                if (prev.val < insertVal and insertVal > cur.val) or (prev.val > insertVal and insertVal < cur.val):
                     break
             prev, cur = cur, cur.next
             if prev == head:
                 break
-            
         prev.next = Node(insertVal, cur)
         return head
-
-        
-		
