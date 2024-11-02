@@ -4,33 +4,28 @@ class Solution(object):
         :type nums: List[int]
         :rtype: None Do not return anything, modify nums in-place instead.
         """
-        """
-        When reading from right to left, 
-        if the sequence is descending, 
-        that part of the sequence represents the highest possible order for those elements (like [3, 2, 1]). 
-        So, to get a larger permutation, we need to find where we can "break" this descending order to make a small increase.
-        """
-        # find the last increasing position
+        # find the last position stop decreasing, pos i
+        # find the smallest larger value pos j
+        # exchange the values in the positions
+        # reverse the part after index i
         i = len(nums) - 2
-        while i >= 0:
-            if nums[i] >= nums[i + 1]:
-                i -= 1
-            else:
-                break
+        while i >= 0 and nums[i] >= nums[i + 1]:
+            i -= 1
         if i >= 0:
-            # find the smallest num greater than nums[i]
+            # find j
             j = len(nums) - 1
-            while nums[j] <= nums[i]:
+            min_val = float('inf')
+            min_idx = -1
+            while j > i:
+                if nums[j] > nums[i] and nums[j] < min_val:
+                    min_val = nums[j]
+                    min_idx = j
                 j -= 1
-            # swap
-            nums[i], nums[j] = nums[j], nums[i]
-            # reverse
-        m = i + 1 
-        n = len(nums) - 1
-        while m < n:
-            nums[m], nums[n] = nums[n], nums[m]
-            m += 1
-            n -= 1
-            
-
-
+            print(min_idx)
+            # exchange
+            nums[i], nums[min_idx] = nums[min_idx], nums[i]
+            # # reverse
+            nums[i + 1:] = nums[i + 1:][::-1]
+        else: 
+            nums.reverse()
+        return nums
