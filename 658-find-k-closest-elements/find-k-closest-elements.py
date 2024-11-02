@@ -1,5 +1,5 @@
 class Solution:
-    def findClosestElements(self, arr: List[int], k: int, x: int) -> List[int]:
+    def findClosestElements1(self, arr: List[int], k: int, x: int) -> List[int]:
         left = bisect_left(arr, x) - 1
         right = left + 1
         # (), both exclusive
@@ -12,3 +12,17 @@ class Solution:
             else:
                 right += 1
         return arr[left + 1: right]
+    def findClosestElements(self, arr: List[int], k: int, x: int) -> List[int]:
+        # Initialize binary search bounds
+        left = 0
+        right = len(arr) - k #the farthest starting position for a subarray of size k within arr
+        
+        # Binary search against the criteria described
+        while left < right:
+            mid = (left + right) // 2
+            if x - arr[mid] > arr[mid + k] - x:
+                left = mid + 1
+            else:
+                right = mid
+
+        return arr[left:left + k]
