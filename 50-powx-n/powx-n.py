@@ -5,11 +5,16 @@ class Solution:
         if n == 0:
             return 1
         if n < 0:
-            return 1.0 / self.helper(x, -1*n)
-        if n % 2 == 1:
-            return x * self.helper(x * x, (n - 1) // 2)
-        else:
-            return self.helper(x * x, n // 2)
+            n = -n
+            x = 1.0/x
+        res = 1
+        while n != 0:
+            if n % 2 == 1:
+                res = res * x
+                n -= 1
+            x *= x
+            n //= 2
+        return res
         
 
 
