@@ -1,11 +1,11 @@
-class TrieNode():
+class TrieNode:
     def __init__(self):
         self.children = [None] * 10
 
-class Trie():
+class Trie:
     def __init__(self):
         self.root = TrieNode()
-
+    
     def insert(self, num):
         num_str = str(num)
         p = self.root
@@ -13,24 +13,17 @@ class Trie():
             if not p.children[int(c)]:
                 p.children[int(c)] = TrieNode()
             p = p.children[int(c)]
-
-    def find(self, num):
-        node = self.root
-        num_str = str(num)
-        len = 0
-
-        for digit in num_str:
-            idx = int(digit)
-            if node.children[idx]:
-                # Increase length if the current digit matches
-                len += 1
-                node = node.children[idx]
+    def find_longest(self, target):
+        p = self.root
+        i = 0
+        t_str = str(target)
+        while i < len(t_str) and p:
+            if p.children[int(t_str[i])]:
+                p = p.children[int(t_str[i])]
+                i += 1
             else:
-                # Stop if no match for the current digit
                 break
-        return len
-
-
+        return i
 class Solution(object):
     def longestCommonPrefix(self, arr1, arr2):
         """
@@ -39,10 +32,10 @@ class Solution(object):
         :rtype: int
         """
         trie = Trie()
-        for n in arr1:
-            trie.insert(n)
         res = 0
-        for n in arr2:
-            res = max(res,trie.find(n))
+        for i in arr1:
+            trie.insert(i)
+        for i in arr2:
+            cur_val = trie.find_longest(i)
+            res = max(res, cur_val)
         return res
-        
