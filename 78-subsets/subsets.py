@@ -4,8 +4,6 @@ class Solution:
         self.helper(nums, 0, [])
         return self.res
     def helper(self, nums, idx, temp):
-        # if idx >= len(nums):
-        #     return
         self.res.append(temp[:])
         for i in range(idx, len(nums)):
             temp.append(nums[i])
