@@ -1,8 +1,6 @@
 class Solution:
     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
-        # The deque (dq) is used to store indices of elements in nums, 
-        # maintaining a decreasing order of values from front to back.
-        # This ensures that the largest element in the current window is always at the front of the deque (dq[0]).
+        # deque: store the indices of elems in num, maining the value in a decreasing order
         dq = deque()
         res = []
         # first window
@@ -13,11 +11,11 @@ class Solution:
         res.append(nums[dq[0]])
         # remaining window
         for i in range(k, len(nums)):
-            if dq and i - k == dq[0]:
+            if i - k == dq[0]:
                 dq.popleft()
+            # is the current val the largest
             while dq and nums[i] >= nums[dq[-1]]:
                 dq.pop()
             dq.append(i)
             res.append(nums[dq[0]])
-
         return res
