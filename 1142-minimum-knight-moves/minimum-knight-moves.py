@@ -1,21 +1,29 @@
 class Solution:
     def minKnightMoves(self, x: int, y: int) -> int:
-        directions = [[-2,-1], [-1,-2], [1,-2],[2,-1], [-2,1], [-1,2],[1,2],[2,1]]
-        queue = deque()
-        queue.append((0,0))
-        res = -1
-        seen = set()
-        while queue:
-            sz = len(queue)
-            res += 1
-            for _ in range(sz):
-                i, j = queue.popleft()
-                seen.add((i, j))
-                if i == x and y == j:
-                    return res
-                for di, dj in directions:
-                    newi = i + di
-                    newj = j + dj
-                    if (newi,newj) not in seen:
-                        queue.append((newi, newj))
-                        seen.add((newi, newj))
+        # the offsets in the eight directions
+        offsets = [(1, 2), (2, 1), (2, -1), (1, -2),
+                   (-1, -2), (-2, -1), (-2, 1), (-1, 2)]
+
+        def bfs(x, y):
+            visited = set()
+            queue = deque([(0, 0)])
+            steps = 0
+
+            while queue:
+                curr_level_cnt = len(queue)
+                # iterate through the current level
+                for i in range(curr_level_cnt):
+                    curr_x, curr_y = queue.popleft()
+                    if (curr_x, curr_y) == (x, y):
+                        return steps
+
+                    for offset_x, offset_y in offsets:
+                        next_x, next_y = curr_x + offset_x, curr_y + offset_y
+                        if (next_x, next_y) not in visited:
+                            visited.add((next_x, next_y))
+                            queue.append((next_x, next_y))
+
+                # move on to the next level
+                steps += 1
+
+        return bfs(x, y)
