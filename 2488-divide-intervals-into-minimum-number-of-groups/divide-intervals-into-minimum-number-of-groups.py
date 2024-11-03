@@ -8,7 +8,7 @@ class Solution:
             cnt[itv[1] + 1] -= 1
         cur_itv = 0
         max_itv = 0
-        for i in range(lo, hi + 2):
+        for i in range(lo, hi + 1):
             cur_itv += cnt[i]
             max_itv = max(max_itv, cur_itv)
         return max_itv
