@@ -6,11 +6,11 @@ class Solution:
         while queue:
             row, col = queue.popleft()
             ans.append(nums[row][col])
-            
+            # only col == 0 
             if col == 0 and row + 1 < len(nums):
                 queue.append((row + 1, col))
+                # print(row+1, col)
                 
             if col + 1 < len(nums[row]):
                 queue.append((row, col + 1))
-        
         return ans
