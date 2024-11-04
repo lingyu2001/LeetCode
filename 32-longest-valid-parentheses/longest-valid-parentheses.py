@@ -8,7 +8,12 @@ class Solution:
             if s[i] == "(":
                 stack.append(i)
             else:
-                stack.pop()
+                if stack:
+                    stack.pop()
+                # If, while popping the element, the stack becomes empty, 
+                # we will push the current element's index onto the stack. 
+                # In this way, we can continue to calculate the length of the 
+                # valid substrings and return the length of the longest valid string at the end.
                 if not stack:
                     stack.append(i)
                 else:
