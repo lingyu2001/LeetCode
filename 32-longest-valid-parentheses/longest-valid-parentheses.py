@@ -10,6 +10,8 @@ class Solution:
             else:
                 if stack:
                     stack.pop()
+                else:
+                    stack.append(i)
                 # If, while popping the element, the stack becomes empty, 
                 # we will push the current element's index onto the stack. 
                 # In this way, we can continue to calculate the length of the 
