@@ -6,7 +6,7 @@ class Solution:
         # Return 1 for success.
         if index == len(s):
             return 1
-
+        print(index, len(s))
         # If the string starts with a zero, it can't be decoded
         if s[index] == "0":
             return 0
