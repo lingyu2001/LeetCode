@@ -21,7 +21,6 @@ class Solution(object):
                     min_val = nums[j]
                     min_idx = j
                 j -= 1
-            print(min_idx)
             # exchange
             nums[i], nums[min_idx] = nums[min_idx], nums[i]
             # # reverse
