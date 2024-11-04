@@ -3,9 +3,11 @@ class Solution(object):
         N = len(grid)
 
         def neighbors(r, c):
+            res = []
             for nr, nc in ((r-1, c), (r+1, c), (r, c-1), (r, c+1)):
                 if 0 <= nr < N and 0 <= nc < N:
-                    yield nr, nc
+                    res.append((nr, nc))
+            return res
 
         def dfs(r, c, index):
             ans = 1
