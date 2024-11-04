@@ -1,18 +1,21 @@
 class Solution:
-    def myPow(self, x: float, n: int) -> float:
-        return self.helper(x ,n)
-
-    def helper(self, x, n):
-        if n == 0:
-            return 1
+    def binaryExp(self, x: float, n: int) -> float:
+        # Handle case where, n < 0.
         if n < 0:
-            n = -n
-            x = 1/x
-        res = 1
+            n = -1 * n
+            x = 1.0 / x
+
+        # Perform Binary Exponentiation.
+        result = 1
         while n != 0:
+            # If 'n' is odd we multiply result with 'x' and reduce 'n' by '1'.
             if n % 2 == 1:
-                res = x * res
+                result *= x
                 n -= 1
-            x = x * x
+            # We square 'x' and reduce 'n' by half, x^n => (x^2)^(n/2).
+            x *= x
             n //= 2
-        return res
+        return result
+
+    def myPow(self, x: float, n: int) -> float:
+        return self.binaryExp(x, n)
