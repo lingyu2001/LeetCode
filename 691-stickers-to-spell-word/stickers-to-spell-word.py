@@ -1,6 +1,7 @@
 class Solution(object):
     def minStickers(self, stickers, target):
         t_count = collections.Counter(target)
+        # (i.e., the letters in both the sticker and the target).
         A = [collections.Counter(sticker) & t_count
              for sticker in stickers]
 
