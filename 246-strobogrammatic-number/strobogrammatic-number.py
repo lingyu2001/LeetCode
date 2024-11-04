@@ -1,24 +1,17 @@
 class Solution:
     def isStrobogrammatic(self, num: str) -> bool:
-        sbg = ["0","1", "8"]
-        i = 0
-        j = len(num) -1
-        num = list(num)
-        while i <= j:
-            if num[i] == num[j] :
-                if num[i] in sbg:
-                    i += 1
-                    j -= 1
-                    continue
-                else:
-                    return False
-            else:
-                if (num[i] == "6" and num[j] == "9") or (num[i] == "9" and num[j] == "6"):
-                    i += 1
-                    j -= 1
-                    continue
-                else:
-                    return False
+        
+        rotated_digits = {'0': '0', '1': '1', '8': '8', '6': '9', '9': '6'}
+        
+        left = 0 
+        right = len(num) - 1
+        
+        while left <= right:
+            if num[left] not in rotated_digits \
+                    or rotated_digits[num[left]] != num[right]:
+                return False
+            left += 1
+            right -= 1
         return True
             
         
