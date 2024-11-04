@@ -19,8 +19,8 @@ class Solution(object):
 
         area = {}
         index = 2
-        for r in xrange(N):
-            for c in xrange(N):
+        for r in range(N):
+            for c in range(N):
                 if grid[r][c] == 1:
                     area[index] = dfs(r, c, index)
                     index += 1
