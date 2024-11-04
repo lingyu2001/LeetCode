@@ -3,6 +3,8 @@ class Solution:
         answer = []
 
         def backtracking(cur_string, left_count, right_count):
+            if right_count > left_count:
+                return
             if len(cur_string) == 2 * n:
                 answer.append("".join(cur_string))
                 return
