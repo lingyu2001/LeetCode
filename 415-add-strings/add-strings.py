@@ -5,6 +5,7 @@ class Solution:
         res = []
         digits = 0
         i = 1
+        # 错误1: while 条件
         while i <= (max(len(n1), len(n2))):
             if i > len(n1):
                 a = 0
@@ -20,9 +21,10 @@ class Solution:
             res = [add] + res
             # print(res)
             i += 1
+        # 错误2: while结束后不检查digits
         if digits != 0:
             res = [digits] + res
-            i += 1
+            # i += 1
         ret = ""
         for i in res:
             ret = ret + str(i)
