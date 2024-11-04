@@ -2,10 +2,6 @@ from typing import List
 from collections import defaultdict
 
 class Solution:
-    def __init__(self):
-        self.visited = set()
-        self.adjacent = defaultdict(list)
-
     def DFS(self, mergedAccount: List[str], email: str):
         self.visited.add(email)
         # Add the email to the current component's emails
@@ -19,6 +15,8 @@ class Solution:
                 self.DFS(mergedAccount, neighbor)
 
     def accountsMerge(self, accountList: List[List[str]]) -> List[List[str]]:
+        self.visited = set()
+        self.adjacent = defaultdict(list)
         # Build the adjacency list
         for account in accountList:
             accountFirstEmail = account[1]
