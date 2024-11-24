@@ -10,6 +10,10 @@ class Solution:
         from math import log2
         num = ip_to_num(ip)
         while n > 0:
+            '''
+            num & -num will always yield a power of 2 
+            corresponding to the position of the lowest set bit.
+            '''
             if num == 0:
                 low_bit = 1 << 32
             else:
