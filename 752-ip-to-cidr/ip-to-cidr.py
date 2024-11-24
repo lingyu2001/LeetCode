@@ -10,7 +10,7 @@ class Solution:
         cur_ip = ip_to_bin(ip)
         while n > 0:
             last_one = 31
-            while last_one> -1 and cur_ip[last_one] != '1':
+            while last_one> -1 and cur_ip[last_one] == '0':
                 last_one -= 1
             trailing_zero = 31 - last_one
             while n - (2 ** trailing_zero) < 0:
