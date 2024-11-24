@@ -19,7 +19,7 @@ class Solution:
             else:
                 low_bit = num & (-num)
             while low_bit > n:
-                low_bit >>= 1
+                low_bit >>= 1 
             n -= low_bit
             res.append(f'{num_to_ip(num)}/{32 - int(log2(low_bit))}')
             num += low_bit
