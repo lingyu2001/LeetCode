@@ -6,20 +6,13 @@ class Allocator:
         
 
     def allocate(self, size: int, mID: int) -> int:
-        # if size > self.size:
-        #     return -1
-        # elif size == self.size:
-        #     if len(self.allocation) == 0:
-        #         return 0
-        #     else:
-        #         return -1
         left = 0
         while left < self.size:
-            if self.allocation[left] != None:
+            if self.allocation[left] is not None:
                 left += 1
             else:
                 right = left
-                while right < self.size and self.allocation[right] == None:
+                while right < self.size and self.allocation[right] is None:
                     free_size = right - left + 1
                     if free_size >= size:
                         self.allocation[left:left + size] =  [mID] * size
@@ -28,9 +21,6 @@ class Allocator:
                         right += 1
                 left = right + 1
         return -1
-
-
-        
 
     def freeMemory(self, mID: int) -> int:
         cnt = 0
