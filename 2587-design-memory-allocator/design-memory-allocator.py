@@ -42,14 +42,14 @@ class Allocator:
         # find insertion position by start
         i = bisect_left(self.free, (l, r))
         # try to merge with left neighbor
-        if i > 0 and self.free[i-1][1] >= l:
+        if i > 0 and self.free[i-1][1] == l:
             i -= 1
             l = self.free[i][0]
             r = max(r, self.free[i][1])
             self.free.pop(i)
         # merge forward while overlapping / touching
         while i < len(self.free) and self.free[i][0] <= r:
-            l = min(l, self.free[i][0])
+            # l = min(l, self.free[i][0])
             r = max(r, self.free[i][1])
             self.free.pop(i)
         # insert merged interval
