@@ -1,53 +1,47 @@
 class Allocator:
-
     def __init__(self, n: int):
-        # store free storage
+        # store free space
         self.free = [(0, n)]
-        # store used storage, mID:(start index, size)
-        self.owned = {} 
+        # store used space
+        self.used = {}
 
     def allocate(self, size: int, mID: int) -> int:
-        # first-fit
-        # iterate all free storage and find the first storage that fits
-        for idx, (l, r) in enumerate(self.free):
-            length = r - l 
-            # compare 
+        for idx,(l, r) in enumerate(self.free):
+            length = r - l
             if length >= size:
-                # fits
-                # update free storage 
-                if l + size == r:
+                if length == size:
+                    # update free space
                     self.free.pop(idx)
                 else:
-                    self.free[idx] = (l + size,r)
-                self.owned.setdefault(mID, []).append((l, size))
+                    # there's some remainder space
+                    # update free space
+                    self.free[idx] = (l + size, r)
+                # update used space
+                self.used.setdefault(mID,[]).append((l, size))
                 return l
         return -1
 
     def freeMemory(self, mID: int) ->int:
-        # put the free memory back to the free array
-        # merge
-        blocked = self.owned.pop(mID, [])
-        if not blocked:
-            return 0
+        blocked = self.used.pop(mID, [])
         ans = 0
-        for l, s in blocked:
-            ans += s
-            self._merge(l, s)
+        if not blocked:
+            return ans
+        for (start, size) in blocked:
+            ans += size
+            self._merge(start, size)
         return ans
     
     def _merge(self, start: int, size: int) -> None:
-        # binary insert
-        idx = bisect.bisect_left(self.free, (start, start + size))
-        # try merging the left block
-        l = start
-        r = start + size
+        # insert the blocks to free array, ensuring no overlapping
+        end = start + size
+        idx = bisect.bisect_left(self.free, (start, end)) # find the right place to insert
+        # check overlapping with left interval
         if idx > 0 and self.free[idx - 1][1] == start:
-            l = self.free[idx-1][0]
-            idx = idx - 1
-            r = max(self.free[idx][1], r)
+            start = self.free[idx - 1][0]
+            self.free.pop(idx - 1)
+            idx -= 1
+        # checking forward overlapping
+        while idx < len(self.free) and self.free[idx][0] <= end:
+            end = max(end, self.free[idx][1])
             self.free.pop(idx)
-        # check the forward overlapping
-        while idx < len(self.free) and self.free[idx][0] <= r:
-            r = max(self.free[idx][1], r)
-            self.free.pop(idx)
-        self.free.insert(idx, (l, r))
+        self.free.insert(idx, (start, end))
